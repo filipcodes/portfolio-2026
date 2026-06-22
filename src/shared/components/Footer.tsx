@@ -4,7 +4,7 @@ import { Button } from '@/shared/components/Button'
 
 export function Footer() {
   return (
-    <footer className='flex bg-gray-200 px-4'>
+    <footer className='flex px-4'>
       <nav>
         <ul>
           <li>

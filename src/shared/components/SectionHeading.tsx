@@ -11,7 +11,7 @@ function NumberShuffle({ number }: NumberShuffleProps) {
 
   const displayNumber = useNumberShuffle(number.toString().padStart(2, '0'))
 
-  return <div>[{displayNumber}]</div>
+  return <span>[{displayNumber}]</span>
 }
 
 interface SectionHeadingProps {
@@ -21,11 +21,13 @@ interface SectionHeadingProps {
 
 export function SectionHeading({ label, addendum }: SectionHeadingProps) {
   return (
-    <h2 className='mt-8 text-xl'>
-      <div className='flex justify-between'>
-        {label}
-        {typeof addendum === 'number' && <NumberShuffle number={addendum} />}
-      </div>
+    <h2 className='mt-12 mb-4 flex items-baseline justify-between font-mono text-sm tracking-widest text-fg-muted uppercase'>
+      <span>{label}</span>
+      {typeof addendum === 'number' && (
+        <span className='text-signal'>
+          <NumberShuffle number={addendum} />
+        </span>
+      )}
     </h2>
   )
 }

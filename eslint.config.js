@@ -62,10 +62,10 @@ export default defineConfig([
       'simple-import-sort/imports': 'error',
       'simple-import-sort/exports': 'error',
 
-      // eslint-plugin-tailwindcss@3.x is incompatible with ESLint 10 — this
-      // rule crashes on template-literal classNames. Class ordering is
-      // already handled by prettier-plugin-tailwindcss anyway.
+      // eslint-plugin-tailwindcss@3.x is incompatible with ESLint 10
       'tailwindcss/classnames-order': 'off',
+
+      'tailwindcss/no-custom-classname': 'off',
 
       // Force all local imports through the @/ alias (no ./ or ../).
       '@typescript-eslint/no-restricted-imports': [

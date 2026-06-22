@@ -1,16 +1,20 @@
 import {
+  addDays,
   differenceInDays,
   endOfYear,
+  format,
   getDay,
   startOfYear,
   subMonths,
 } from 'date-fns'
 import { useState } from 'react'
 
+import { Button } from '@/shared/components/Button'
+
 const GITHUB_GRAPH_SCOPE_OPTION = {
-  MONTH: 'MONTH',
   YEAR: 'YEAR',
   YTD: 'YTD',
+  MONTH: 'MONTH',
 } as const
 
 type GithubGraphScopeOption =
@@ -25,63 +29,85 @@ const RANGE_BY_SCOPE = {
   (now: Date) => { start: Date; end: Date }
 >
 
+const DAY_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+const CELL_SIZE = 'h-3 w-3'
+const COL_STAGGER_MS = 18
+
+interface GithubGraphNodeProps {
+  isToday: boolean
+  col: number
+}
+
+function GithubGraphNode({ isToday, col }: GithubGraphNodeProps) {
+  return (
+    <button
+      onClick={() => {
+        console.error('Hello World!')
+      }}
+      style={{ animationDelay: `${(col * COL_STAGGER_MS).toString()}ms` }}
+      className={`${CELL_SIZE} animate-cell-in bg-elevated hover:bg-signal-dim rounded-xs ${
+        isToday ? 'ring-signal ring-1 ring-inset' : ''
+      }`}
+    />
+  )
+}
+
 export function GithubGraph() {
-  const [scope, setScope] = useState<GithubGraphScopeOption>('MONTH')
+  const [scope, setScope] = useState<GithubGraphScopeOption>('YEAR')
+
   const now = new Date()
   const { start, end } = RANGE_BY_SCOPE[scope](now)
-  const squareCount = differenceInDays(end, start) + 1
   const padding = getDay(start)
-  const todayIndex = differenceInDays(now, start)
+  const dates = Array.from(
+    { length: differenceInDays(end, start) + 1 },
+    (_, i) => addDays(start, i),
+  )
+  const todayKey = format(now, 'yyyy-MM-dd')
 
   return (
-    <>
-      <div>
-        {scope}
-
-        <div className='flex gap-4'>
-          {Object.values(GITHUB_GRAPH_SCOPE_OPTION).map((option) => {
-            return (
-              <button
-                className='rounded-md bg-gray-500 p-1'
-                onClick={() => {
-                  setScope(option)
-                }}
-                key={option}
-              >
-                {option}
-              </button>
-            )
-          })}
+    <div>
+      <div className='flex gap-2 overflow-x-auto'>
+        <div className='grid shrink-0 grid-rows-7 gap-1 pr-1'>
+          {DAY_NAMES.map((name, idx) => (
+            <div
+              key={name}
+              className='text-fg-subtle flex h-3 items-center justify-end font-mono text-[10px] leading-none'
+            >
+              {idx % 2 === 1 ? name : ''}
+            </div>
+          ))}
         </div>
-      </div>
 
-      <div className='w-full overflow-x-scroll'>
-        <div className='grid w-min grid-flow-col grid-rows-7 gap-0.5 p-2'>
-          {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((name) => {
+        <div key={scope} className='grid w-min grid-flow-col grid-rows-7 gap-1'>
+          {Array.from({ length: padding }, (_, i) => (
+            <div className={CELL_SIZE} key={i} />
+          ))}
+
+          {dates.map((date, i) => {
+            const key = format(date, 'yyyy-MM-dd')
             return (
-              <div className='text-xs' key={name}>
-                {name}
-              </div>
-            )
-          })}
-
-          {Array.from({ length: padding }, (_, i) => {
-            return <div key={i} />
-          })}
-
-          {Array.from({ length: squareCount }, (_, i) => {
-            return (
-              <button
-                onClick={() => {
-                  console.error('Hello World!')
-                }}
-                className={`grid aspect-square h-4 place-items-center rounded-xs bg-gray-500 ${i === todayIndex ? 'ring-1' : 'bg-gray-500'}`}
-                key={i}
+              <GithubGraphNode
+                key={key}
+                isToday={key === todayKey}
+                col={Math.floor((i + padding) / 7)}
               />
             )
           })}
         </div>
       </div>
-    </>
+
+      <div className='mt-4 flex justify-center gap-3'>
+        {Object.values(GITHUB_GRAPH_SCOPE_OPTION).map((option) => (
+          <Button
+            key={option}
+            label={option}
+            aria-pressed={option === scope}
+            onClick={() => {
+              setScope(option)
+            }}
+          />
+        ))}
+      </div>
+    </div>
   )
 }

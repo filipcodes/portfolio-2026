@@ -4,11 +4,6 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-patchedDependencies:
-  eslint-plugin-tailwindcss:
-    hash: 6f7692707a2257a3adfbfd821eb17c047f1176c274c0924560a62095d49319b9
-    path: patches/eslint-plugin-tailwindcss.patch
-
 importers:
 
   .:
@@ -88,7 +83,7 @@ importers:
         version: 13.0.0(eslint@10.5.0(jiti@2.7.0))
       eslint-plugin-tailwindcss:
         specifier: 4.0.0-beta.0
-        version: 4.0.0-beta.0(patch_hash=6f7692707a2257a3adfbfd821eb17c047f1176c274c0924560a62095d49319b9)(tailwindcss@4.3.1)
+        version: 4.0.0-beta.0(tailwindcss@4.3.1)
       globals:
         specifier: ^17.6.0
         version: 17.6.0
@@ -2900,7 +2895,7 @@ snapshots:
     dependencies:
       eslint: 10.5.0(jiti@2.7.0)
 
-  eslint-plugin-tailwindcss@4.0.0-beta.0(patch_hash=6f7692707a2257a3adfbfd821eb17c047f1176c274c0924560a62095d49319b9)(tailwindcss@4.3.1):
+  eslint-plugin-tailwindcss@4.0.0-beta.0(tailwindcss@4.3.1):
     dependencies:
       fast-glob: 3.3.3
       postcss: 8.5.15
