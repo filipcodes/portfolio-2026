@@ -11,6 +11,27 @@ import { defineConfig, globalIgnores } from 'eslint/config'
 import eslintPluginTailwindCSS from 'eslint-plugin-tailwindcss'
 import eslintConfigPrettier from 'eslint-config-prettier'
 
+const restrictedImportPaths = [
+  {
+    name: '@tanstack/react-router',
+    importNames: ['Link'],
+    message:
+      "Import { Link } from '@/shared/components/Link' — the wrapper preserves type-safe routing while owning styling.",
+  },
+]
+
+const restrictedImportPatterns = [
+  {
+    regex: '^\\.',
+    message:
+      "Use the '@/' alias instead of relative imports for ease of refactoring.",
+  },
+]
+
+const colocatedRoutePrivateFolders = [
+  { folder: '@/routes/-home/', allowedImporter: 'src/routes/index.tsx' },
+]
+
 export default defineConfig([
   globalIgnores(['dist', 'src/routeTree.gen.ts']),
   {
@@ -71,13 +92,8 @@ export default defineConfig([
       '@typescript-eslint/no-restricted-imports': [
         'error',
         {
-          patterns: [
-            {
-              regex: '^\\.',
-              message:
-                "Use the '@/' alias instead of relative imports for ease of refactoring.",
-            },
-          ],
+          paths: restrictedImportPaths,
+          patterns: restrictedImportPatterns,
         },
       ],
 
@@ -100,13 +116,32 @@ export default defineConfig([
     },
   },
   {
-    // TanStack Router file-based routes export a `Route` constant alongside
-    // a local component function — that mixed-export shape conflicts with
-    // react-refresh/only-export-components, but it's the framework's required
-    // pattern. The router's HMR integration handles refresh for these files.
     files: ['src/routes/**/*.{ts,tsx}'],
     rules: {
       'react-refresh/only-export-components': 'off',
     },
   },
+  // Enforce co-location: each routes/-<name>/ folder is importable only by it's owning page
+  ...colocatedRoutePrivateFolders.map(({ folder, allowedImporter }) => {
+    const folderGlob = folder.replace(/^@\//, 'src/') + '**'
+    return {
+      files: ['**/*.{ts,tsx}'],
+      ignores: [allowedImporter, folderGlob],
+      rules: {
+        '@typescript-eslint/no-restricted-imports': [
+          'error',
+          {
+            paths: restrictedImportPaths,
+            patterns: [
+              ...restrictedImportPatterns,
+              {
+                regex: `^${folder}`,
+                message: `Components in '${folder}' are colocated to a single page. Promote to '@/shared/components/' if reuse is needed elsewhere.`,
+              },
+            ],
+          },
+        ],
+      },
+    }
+  }),
 ])

@@ -53,9 +53,11 @@ function GithubGraphNode({ isToday, col }: GithubGraphNodeProps) {
 }
 
 export function GithubGraph() {
-  const [scope, setScope] = useState<GithubGraphScopeOption>('YEAR')
+  const [scope, setScope] = useState<GithubGraphScopeOption>('YTD')
 
+  // We keep one date per instance of this component to reduce "weird" edge-cases like a mismatch in IDs of the nodes if they were to compute their own Date
   const now = new Date()
+
   const { start, end } = RANGE_BY_SCOPE[scope](now)
   const padding = getDay(start)
   const dates = Array.from(
@@ -78,17 +80,19 @@ export function GithubGraph() {
           ))}
         </div>
 
+        {/* Padding - Front - accounts for the days before a certain period */}
         <div key={scope} className='grid w-min grid-flow-col grid-rows-7 gap-1'>
           {Array.from({ length: padding }, (_, i) => (
             <div className={CELL_SIZE} key={i} />
           ))}
 
           {dates.map((date, i) => {
-            const key = format(date, 'yyyy-MM-dd')
+            const formattedDate = format(date, 'yyyy-MM-dd')
+
             return (
               <GithubGraphNode
-                key={key}
-                isToday={key === todayKey}
+                key={formattedDate}
+                isToday={formattedDate === todayKey}
                 col={Math.floor((i + padding) / 7)}
               />
             )

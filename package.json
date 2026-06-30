@@ -1,7 +1,7 @@
 {
   "name": "portfolio-2026",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -13,6 +13,7 @@
     "@tailwindcss/vite": "^4.3.1",
     "@tanstack/react-router": "^1.170.16",
     "date-fns": "^4.4.0",
+    "motion": "^12.42.0",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "tailwindcss": "^4.3.1"

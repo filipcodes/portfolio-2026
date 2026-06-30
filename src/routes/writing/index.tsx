@@ -1,6 +1,9 @@
-import { createFileRoute, Link } from '@tanstack/react-router'
+import { createFileRoute } from '@tanstack/react-router'
 
+import { Link } from '@/shared/components/Link'
 import { SectionHeading } from '@/shared/components/SectionHeading'
+import { featuredArticles } from '@/shared/constants/featuredArticles'
+import { estimateMinutesToRead } from '@/shared/utils/estimateMinutesToRead'
 
 export const Route = createFileRoute('/writing/')({
   component: WritingIndexPage,
@@ -8,25 +11,31 @@ export const Route = createFileRoute('/writing/')({
 
 function WritingIndexPage() {
   return (
-    <>
-      <SectionHeading label='Writing' />
-      <ul>
-        <li>
-          <Link to='/writing/$slug' params={{ slug: 'article-1' }}>
-            Article 1 - Date published
-          </Link>
-        </li>
-        <li>
-          <Link to='/writing/$slug' params={{ slug: 'article-2' }}>
-            Article 2 - Date published
-          </Link>
-        </li>
-        <li>
-          <Link to='/writing/$slug' params={{ slug: 'article-3' }}>
-            Article 3 - Date published
-          </Link>
-        </li>
+    <section className='pt-32'>
+      <SectionHeading label='Writing' addendum={featuredArticles.length} />
+      <ul className='border-border border-t'>
+        {featuredArticles.map((article) => (
+          <li key={article.slug} className='border-border border-b'>
+            <Link
+              to='/writing/$slug'
+              params={{ slug: article.slug }}
+              className='group flex items-baseline gap-6 py-6 hover:no-underline!'
+            >
+              <div className='flex-1 transition-transform duration-300 ease-out group-hover:translate-x-4'>
+                <h2 className='font-display text-xl tracking-tight md:text-2xl'>
+                  {article.title}
+                </h2>
+                <p className='text-fg-muted mt-2 font-mono text-xs tracking-widest uppercase'>
+                  {article.date}
+                </p>
+              </div>
+              <span className='text-fg-muted font-mono text-xs tracking-widest uppercase tabular-nums'>
+                {estimateMinutesToRead(article.content)} MIN
+              </span>
+            </Link>
+          </li>
+        ))}
       </ul>
-    </>
+    </section>
   )
 }

@@ -2,8 +2,7 @@
 
 @theme {
   /* Display — characterful, technical-but-warm. Headings & wordmark. */
-  --font-display:
-    'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
 
   /* Utility / "instrument" — eyebrows, dates, counts, code, metadata. */
   --font-mono:
@@ -49,15 +48,30 @@
   body {
     @apply bg-bg text-fg font-sans antialiased;
   }
+
   h1,
   h2,
   h3,
   h4 {
     @apply font-display;
   }
+
   code,
   pre,
   kbd {
     @apply font-mono;
+  }
+
+  :focus {
+    @apply outline-signal;
+  }
+
+  :focus-visible {
+    @apply outline-signal outline-2 outline-offset-2;
+  }
+
+  ::selection {
+    background-color: var(--color-signal);
+    color: var(--color-bg);
   }
 }

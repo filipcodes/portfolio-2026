@@ -1,10 +1,18 @@
-import { useEffect,useState } from 'react'
+import { useEffect, useState } from 'react'
 
-export function useNumberShuffle(targetValue: string, duration = 900) {
+import { DIGITS, scramble } from '@/shared/utils/scramble'
+
+export function useNumberShuffle(
+  targetValue: string,
+  enabled = true,
+  duration = 900,
+) {
   const [display, setDisplay] = useState(targetValue)
 
   useEffect(
     function shuffleDigits() {
+      if (!enabled) return
+
       const tickMs = 30
       const totalTicks = Math.max(1, Math.round(duration / tickMs))
 
@@ -17,11 +25,7 @@ export function useNumberShuffle(targetValue: string, duration = 900) {
           clearInterval(id)
           setDisplay(targetValue)
         } else {
-          setDisplay(
-            Array.from(targetValue, () => Math.floor(Math.random() * 10)).join(
-              '',
-            ),
-          )
+          setDisplay(scramble(targetValue, 0, DIGITS))
         }
       }, tickMs)
 
@@ -29,7 +33,7 @@ export function useNumberShuffle(targetValue: string, duration = 900) {
         clearInterval(id)
       }
     },
-    [targetValue, duration],
+    [targetValue, duration, enabled],
   )
 
   return display

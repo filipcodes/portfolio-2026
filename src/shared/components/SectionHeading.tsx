@@ -1,3 +1,7 @@
+import { useInView } from 'motion/react'
+import { useRef } from 'react'
+
+import { viewportOnce } from '@/shared/constants/motion'
 import { useNumberShuffle } from '@/shared/hooks/useNumberShuffle'
 
 interface NumberShuffleProps {
@@ -9,9 +13,15 @@ function NumberShuffle({ number }: NumberShuffleProps) {
     console.error('Number passed to NumberShuffle should not be less than 1')
   }
 
-  const displayNumber = useNumberShuffle(number.toString().padStart(2, '0'))
+  const ref = useRef<HTMLSpanElement>(null)
+  const inView = useInView(ref, viewportOnce)
 
-  return <span>[{displayNumber}]</span>
+  const displayNumber = useNumberShuffle(
+    number.toString().padStart(2, '0'),
+    inView,
+  )
+
+  return <span ref={ref}>[{displayNumber}]</span>
 }
 
 interface SectionHeadingProps {
@@ -21,12 +31,17 @@ interface SectionHeadingProps {
 
 export function SectionHeading({ label, addendum }: SectionHeadingProps) {
   return (
-    <h2 className='mt-12 mb-4 flex items-baseline justify-between font-mono text-sm tracking-widest text-fg-muted uppercase'>
+    <h2 className='text-fg-muted mb-4 flex items-baseline justify-between font-mono text-sm tracking-widest uppercase'>
       <span>{label}</span>
+
       {typeof addendum === 'number' && (
         <span className='text-signal'>
           <NumberShuffle number={addendum} />
         </span>
+      )}
+
+      {typeof addendum === 'string' && (
+        <span className='text-signal'>{addendum}</span>
       )}
     </h2>
   )
