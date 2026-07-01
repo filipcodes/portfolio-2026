@@ -6,7 +6,7 @@ import { links } from '@/shared/constants/links'
 
 export function Footer() {
   return (
-    <footer className='flex h-[calc(100dvh-72px)] flex-col'>
+    <footer className='mx-auto flex h-[calc(100dvh-72px)] max-h-200 w-full max-w-316 flex-col'>
       <div className='mx-auto w-full max-w-300 px-2 md:px-8'>
         <div className='border-border flex items-baseline justify-between border-b py-6'>
           <InPageScroll direction='up' iconPlacement='leading' scrollTo={0}>
@@ -70,14 +70,14 @@ export function Footer() {
 
       <div
         aria-hidden
-        className='relative flex items-end gap-[1.5vw] overflow-hidden'
+        className='relative flex items-end gap-[min(1.5vw,1.2rem)] overflow-hidden'
       >
         <img
           src='/fs.png'
           alt=''
-          className='aspect-square w-[10vw] shrink-0 translate-y-[30.5%]'
+          className='aspect-square w-[min(10vw,7.9rem)] shrink-0 md:translate-y-[30.5%]'
         />
-        <span className='block translate-y-[25%] font-mono text-[12vw] leading-none font-bold tracking-tighter whitespace-nowrap select-none'>
+        <span className='block font-mono text-[min(12vw,9.5rem)] leading-none font-bold tracking-tighter whitespace-nowrap select-none md:translate-y-[25%]'>
           Filip Sipos.
         </span>
       </div>

@@ -8,7 +8,7 @@ const PHASE_MS = 300
 
 const headerStyles = {
   base: 'group fixed left-1/2 z-80 -translate-x-1/2 border transition-all duration-300 ease-out',
-  pill: 'bg-bg top-4 w-4/5 md:w-3/5 rounded-full px-4 md:px-8  py-2',
+  pill: 'bg-bg top-4 w-4/5 md:w-[min(60%,65rem)] rounded-full px-4 md:px-8 py-2',
   bar: 'top-0 w-full rounded-none px-4 md:px-16 py-4',
   bordered: 'border-border',
   unbordered: 'border-transparent',
