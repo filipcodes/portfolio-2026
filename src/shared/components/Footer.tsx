@@ -2,6 +2,7 @@ import { ExternalLink } from '@/shared/components/ExternalLink'
 import { InPageScroll } from '@/shared/components/InPageScroll'
 import { Link } from '@/shared/components/Link'
 import { SectionHeading } from '@/shared/components/SectionHeading'
+import { links } from '@/shared/constants/links'
 
 export function Footer() {
   return (
@@ -35,15 +36,15 @@ export function Footer() {
             <SectionHeading label='Connect' />
             <ul className='space-y-2'>
               <li>
-                <ExternalLink href='mailto:filip.sipos@onesimplicity.com'>
-                  filip.sipos@onesimplicity.com
+                <ExternalLink href={`mailto:${links.email}`}>
+                  {links.email}
                 </ExternalLink>
               </li>
               <li>
-                <ExternalLink href='http://'>GitHub</ExternalLink>
+                <ExternalLink href={links.github}>GitHub</ExternalLink>
               </li>
               <li>
-                <ExternalLink href='http://'>LinkedIn</ExternalLink>
+                <ExternalLink href={links.linkedin}>LinkedIn</ExternalLink>
               </li>
             </ul>
           </div>

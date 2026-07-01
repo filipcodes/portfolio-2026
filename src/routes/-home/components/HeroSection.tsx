@@ -2,6 +2,7 @@ import { motion } from 'motion/react'
 
 import { ExternalLink } from '@/shared/components/ExternalLink'
 import { InPageScroll } from '@/shared/components/InPageScroll'
+import { links } from '@/shared/constants/links'
 import { fadeUp, staggerContainer } from '@/shared/constants/motion'
 
 function HeroMainContent() {
@@ -28,20 +29,22 @@ function HeroMainContent() {
         variants={fadeUp}
         className='text-fg-muted font-mono text-xs tracking-widest uppercase'
       >
-        Bratislava · Europe
+        Europe · UTC+01:00
       </motion.p>
+
       <motion.p
         variants={fadeUp}
         className='text-fg-subtle mb-6 font-mono text-xs tracking-widest uppercase'
       >
         48.15°N · 17.11°E
       </motion.p>
+
       <motion.div
         variants={fadeUp}
         className='flex flex-wrap gap-x-8 gap-y-2 font-mono text-xs tracking-widest uppercase'
       >
-        <ExternalLink href='http://'>GitHub</ExternalLink>
-        <ExternalLink href='http://'>LinkedIn</ExternalLink>
+        <ExternalLink href={links.github}>GitHub</ExternalLink>
+        <ExternalLink href={links.linkedin}>LinkedIn</ExternalLink>
         <ExternalLink href='http://'>CV</ExternalLink>
       </motion.div>
     </motion.div>

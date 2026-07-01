@@ -11,6 +11,8 @@ import { defineConfig, globalIgnores } from 'eslint/config'
 import eslintPluginTailwindCSS from 'eslint-plugin-tailwindcss'
 import eslintConfigPrettier from 'eslint-config-prettier'
 
+import { noHardcodedLinksPlugin } from './eslint-rules/no-hardcoded-links.ts'
+
 const restrictedImportPaths = [
   {
     name: '@tanstack/react-router',
@@ -33,7 +35,12 @@ const colocatedRoutePrivateFolders = [
 ]
 
 export default defineConfig([
-  globalIgnores(['dist', 'src/routeTree.gen.ts']),
+  globalIgnores([
+    'dist',
+    'src/routeTree.gen.ts',
+    'eslint.config.ts',
+    'eslint-rules/**',
+  ]),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
@@ -52,6 +59,7 @@ export default defineConfig([
 
     plugins: {
       'simple-import-sort': simpleImportSort,
+      'no-hardcoded-links': noHardcodedLinksPlugin,
     },
 
     languageOptions: {
@@ -82,6 +90,8 @@ export default defineConfig([
       // Import/export ordering — autofixable.
       'simple-import-sort/imports': 'error',
       'simple-import-sort/exports': 'error',
+
+      'no-hardcoded-links/no-hardcoded-links': 'error',
 
       // eslint-plugin-tailwindcss@3.x is incompatible with ESLint 10
       'tailwindcss/classnames-order': 'off',
@@ -121,10 +131,11 @@ export default defineConfig([
       'react-refresh/only-export-components': 'off',
     },
   },
+
   // Enforce co-location: each routes/-<name>/ folder is importable only by it's owning page
-  ...colocatedRoutePrivateFolders.map(({ folder, allowedImporter }) => {
+  ...colocatedRoutePrivateFolders.flatMap(({ folder, allowedImporter }) => {
     const folderGlob = folder.replace(/^@\//, 'src/') + '**'
-    return {
+    return defineConfig({
       files: ['**/*.{ts,tsx}'],
       ignores: [allowedImporter, folderGlob],
       rules: {
@@ -142,6 +153,6 @@ export default defineConfig([
           },
         ],
       },
-    }
+    })
   }),
 ])

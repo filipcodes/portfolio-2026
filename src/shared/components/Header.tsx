@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 
 import { ExternalLink } from '@/shared/components/ExternalLink'
 import { Link } from '@/shared/components/Link'
+import { links } from '@/shared/constants/links'
 
 const PHASE_MS = 300
 
@@ -74,11 +75,11 @@ export function Header() {
             </li>
 
             <li>
-              <ExternalLink href='http://'>GitHub</ExternalLink>
+              <ExternalLink href={links.github}>GitHub</ExternalLink>
             </li>
 
             <li>
-              <ExternalLink href='http://'>LinkedIn</ExternalLink>
+              <ExternalLink href={links.linkedin}>LinkedIn</ExternalLink>
             </li>
           </ul>
         </nav>
