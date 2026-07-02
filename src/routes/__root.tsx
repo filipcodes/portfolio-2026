@@ -1,14 +1,13 @@
-import { createRootRoute, Outlet } from '@tanstack/react-router'
+import { createRootRoute, Outlet, useRouterState } from '@tanstack/react-router'
 import { MotionConfig } from 'motion/react'
 
 import { NotFoundPage } from '@/routes/-not-found/NotFoundPage'
 import { Footer } from '@/shared/components/Footer'
 import { Header } from '@/shared/components/Header'
 import { MouseFollower } from '@/shared/components/MouseFollower'
+import { SITE_TITLE } from '@/shared/constants/site'
 import { useScrambledDocumentTitle } from '@/shared/hooks/useScrambledDocumentTitle'
 import { useTitleWave } from '@/shared/hooks/useTitleWave'
-
-const SITE_TITLE = 'Filip Sipos · Senior Full-Stack Software Engineer'
 
 export const Route = createRootRoute({
   component: RootLayout,
@@ -16,8 +15,19 @@ export const Route = createRootRoute({
 })
 
 function RootLayout() {
-  useScrambledDocumentTitle(SITE_TITLE)
-  useTitleWave(SITE_TITLE)
+  const documentTitle = useRouterState({
+    select: (state) => {
+      const routeTitle = [...state.matches]
+        .reverse()
+        .flatMap((match) => match.meta ?? [])
+        .find((tag) => tag?.title)?.title
+
+      return routeTitle ?? SITE_TITLE
+    },
+  })
+
+  useScrambledDocumentTitle(documentTitle)
+  useTitleWave(documentTitle)
 
   return (
     <MotionConfig reducedMotion='user'>

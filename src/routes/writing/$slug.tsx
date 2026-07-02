@@ -1,32 +1,27 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, notFound } from '@tanstack/react-router'
 
 import { Link } from '@/shared/components/Link'
 import { featuredArticles } from '@/shared/constants/featuredArticles'
+import { SITE_NAME } from '@/shared/constants/site'
 import { estimateMinutesToRead } from '@/shared/utils/estimateMinutesToRead'
 import { formatArticleDate } from '@/shared/utils/formatArticleDate'
 
 export const Route = createFileRoute('/writing/$slug')({
+  loader: ({ params }) => {
+    const article = featuredArticles.find((entry) => entry.slug === params.slug)
+    if (!article) throw notFound()
+    return article
+  },
+  head: ({ loaderData }) => ({
+    meta: [
+      { title: loaderData ? `${loaderData.title} · ${SITE_NAME}` : SITE_NAME },
+    ],
+  }),
   component: WritingArticlePage,
 })
 
 function WritingArticlePage() {
-  const { slug } = Route.useParams()
-  const article = featuredArticles.find((entry) => entry.slug === slug)
-
-  if (!article) {
-    return (
-      <section className='pt-32 pb-32'>
-        <Link
-          to='/writing'
-          activeOptions={{ exact: true }}
-          className='text-fg-muted font-mono text-xs tracking-widest uppercase'
-        >
-          ← Back to &quot;writing&quot;
-        </Link>
-        <p className='mt-12 text-lg'>Article not found.</p>
-      </section>
-    )
-  }
+  const article = Route.useLoaderData()
 
   return (
     <article className='mx-auto max-w-2xl pt-32 pb-32'>

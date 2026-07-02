@@ -98,6 +98,25 @@ export default defineConfig([
 
       'no-placeholder-links/no-placeholder-links': 'error',
 
+      // TanStack Router signals notFound()/redirect() by throwing plain objects.
+      '@typescript-eslint/only-throw-error': [
+        'error',
+        {
+          allow: [
+            {
+              from: 'package',
+              package: '@tanstack/router-core',
+              name: 'NotFoundError',
+            },
+            {
+              from: 'package',
+              package: '@tanstack/router-core',
+              name: 'Redirect',
+            },
+          ],
+        },
+      ],
+
       // eslint-plugin-tailwindcss@3.x is incompatible with ESLint 10
       'tailwindcss/classnames-order': 'off',
 
