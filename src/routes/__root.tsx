@@ -7,7 +7,7 @@ import { MouseFollower } from '@/shared/components/MouseFollower'
 import { useScrambledDocumentTitle } from '@/shared/hooks/useScrambledDocumentTitle'
 import { useTitleWave } from '@/shared/hooks/useTitleWave'
 
-const SITE_TITLE = 'Filip Sipos · Senior Full-Stack Developer · TypeScript'
+const SITE_TITLE = 'Filip Sipos · Senior Full-Stack Software Engineer'
 
 export const Route = createRootRoute({
   component: RootLayout,

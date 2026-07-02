@@ -13,7 +13,7 @@ export function Footer() {
             Back to top
           </InPageScroll>
           <span className='text-fg-muted font-mono text-xs tracking-widest uppercase'>
-            &#9400; 2026 — Issue 01
+            Copyright &#9400; 2026 — Issue 01
           </span>
         </div>
       </div>
