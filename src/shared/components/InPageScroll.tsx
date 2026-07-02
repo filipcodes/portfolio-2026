@@ -1,18 +1,17 @@
 import { motion } from 'motion/react'
 import type { ReactNode } from 'react'
 
-type ScrollTarget = 'top' | 'next-viewport'
+type ScrollTarget = 'top' | `#${string}`
 
 type ScrollDirection = 'up' | 'down'
 
-const SCROLL_TOP_BY_TARGET: Record<ScrollTarget, () => number> = {
-  top: () => 0,
-  'next-viewport': () => window.innerHeight,
-}
+function scrollToTarget(target: ScrollTarget) {
+  if (target === 'top') {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+    return
+  }
 
-const DIRECTION_BY_TARGET: Record<ScrollTarget, ScrollDirection> = {
-  top: 'up',
-  'next-viewport': 'down',
+  document.querySelector(target)?.scrollIntoView({ behavior: 'smooth' })
 }
 
 interface InPageScrollProps {
@@ -47,16 +46,13 @@ export function InPageScroll({
   children,
   className,
 }: InPageScrollProps) {
-  const direction = DIRECTION_BY_TARGET[target]
+  const direction: ScrollDirection = target === 'top' ? 'up' : 'down'
 
   return (
     <button
       type='button'
       onClick={() => {
-        window.scrollTo({
-          top: SCROLL_TOP_BY_TARGET[target](),
-          behavior: 'smooth',
-        })
+        scrollToTarget(target)
       }}
       className={`text-fg-muted hover:text-fg flex items-center gap-3 font-mono text-xs tracking-widest uppercase transition-colors ${className ?? ''}`}
     >

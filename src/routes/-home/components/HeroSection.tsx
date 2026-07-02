@@ -1,5 +1,6 @@
 import { motion } from 'motion/react'
 
+import { WRITING_SECTION_ID } from '@/routes/-home/components/WritingSection'
 import { ExternalLink } from '@/shared/components/ExternalLink'
 import { InPageScroll } from '@/shared/components/InPageScroll'
 import { links } from '@/shared/constants/links'
@@ -75,7 +76,10 @@ export function HeroSection() {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.8, duration: 0.6 }}
       >
-        <InPageScroll target='next-viewport' iconPlacement='trailing'>
+        <InPageScroll
+          target={`#${WRITING_SECTION_ID}`}
+          iconPlacement='trailing'
+        >
           Scroll
         </InPageScroll>
       </motion.div>

@@ -12,9 +12,11 @@ import {
 import { estimateMinutesToRead } from '@/shared/utils/estimateMinutesToRead'
 import { formatArticleDate } from '@/shared/utils/formatArticleDate'
 
+export const WRITING_SECTION_ID = 'featured-writing'
+
 export function WritingSection() {
   return (
-    <section>
+    <section id={WRITING_SECTION_ID} className='scroll-mt-24'>
       <Reveal>
         <SectionHeading
           label='Featured Writing'
