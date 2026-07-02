@@ -104,12 +104,13 @@ export function GithubGraph() {
         {Object.values(GITHUB_GRAPH_SCOPE_OPTION).map((option) => (
           <Button
             key={option}
-            label={option}
             aria-pressed={option === scope}
             onClick={() => {
               setScope(option)
             }}
-          />
+          >
+            {option}
+          </Button>
         ))}
       </div>
     </div>

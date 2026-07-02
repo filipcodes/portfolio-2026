@@ -3,6 +3,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { Link } from '@/shared/components/Link'
 import { featuredArticles } from '@/shared/constants/featuredArticles'
 import { estimateMinutesToRead } from '@/shared/utils/estimateMinutesToRead'
+import { formatArticleDate } from '@/shared/utils/formatArticleDate'
 
 export const Route = createFileRoute('/writing/$slug')({
   component: WritingArticlePage,
@@ -40,13 +41,14 @@ function WritingArticlePage() {
           {article.title}
         </h1>
         <p className='text-fg-muted mt-6 font-mono text-xs tracking-widest uppercase'>
-          {article.date} · {estimateMinutesToRead(article.content)} MIN
+          <time dateTime={article.date}>{formatArticleDate(article.date)}</time>{' '}
+          · {estimateMinutesToRead(article.content)} MIN
         </p>
       </header>
 
       <div className='space-y-6 text-lg leading-relaxed'>
-        {article.content.split('\n\n').map((paragraph) => (
-          <p key={paragraph}>{paragraph}</p>
+        {article.paragraphs.map((paragraph) => (
+          <p key={paragraph.index}>{paragraph.text}</p>
         ))}
       </div>
     </article>

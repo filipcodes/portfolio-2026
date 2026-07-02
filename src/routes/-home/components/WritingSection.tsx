@@ -4,8 +4,13 @@ import { Link } from '@/shared/components/Link'
 import { Reveal } from '@/shared/components/Reveal'
 import { SectionHeading } from '@/shared/components/SectionHeading'
 import { featuredArticles } from '@/shared/constants/featuredArticles'
-import { fadeUp, staggerContainer, viewportOnce } from '@/shared/constants/motion'
+import {
+  fadeUp,
+  staggerContainer,
+  viewportOnce,
+} from '@/shared/constants/motion'
 import { estimateMinutesToRead } from '@/shared/utils/estimateMinutesToRead'
+import { formatArticleDate } from '@/shared/utils/formatArticleDate'
 
 export function WritingSection() {
   return (
@@ -47,7 +52,9 @@ export function WritingSection() {
                     {article.title}
                   </h3>
                   <p className='text-fg-muted mt-2 font-mono text-xs tracking-widest uppercase [text-shadow:0_0_6px_var(--color-bg),0_0_3px_var(--color-bg)]'>
-                    {article.date}
+                    <time dateTime={article.date}>
+                      {formatArticleDate(article.date)}
+                    </time>
                   </p>
                 </div>
                 <span className='text-fg-muted font-mono text-xs tracking-widest uppercase tabular-nums'>

@@ -1,15 +1,21 @@
+export interface ArticleParagraph {
+  index: number
+  text: string
+}
+
 export interface Article {
   slug: string
   title: string
   date: string
   content: string
+  paragraphs: readonly ArticleParagraph[]
 }
 
-export const featuredArticles: readonly Article[] = [
+const articleSources: readonly Omit<Article, 'paragraphs'>[] = [
   {
     slug: 'eslint-remedies-slop',
     title: 'Lorem ipsum dolor sit amet',
-    date: 'JUN 15, 2026',
+    date: '2026-06-15',
     content: `Eu id aliquip ut laborum sit minim esse qui est laborum in consectetur duis. Minim qui consequat sunt exercitation ea proident ex amet deserunt excepteur. Aute fugiat excepteur irure eu lorem tempor dolor sint quis. Occaecat proident consequat consectetur ex minim velit qui quis do aliquip cillum dolor quis voluptate mollit. Voluptate laboris cillum cupidatat amet do mollit aliqua aute veniam est occaecat.
 
 Fugiat cupidatat eu labore pariatur cupidatat in sunt est non voluptate ex in sunt nisi proident. Sint sed ea qui cillum dolor occaecat do dolor consequat non nulla. Proident occaecat sit quis velit et eu aliquip minim dolore id veniam consequat irure quis. Est dolor nostrud aliquip fugiat fugiat sit consectetur mollit consequat. Exercitation ipsum et lorem ipsum aliqua eu deserunt magna ex veniam cillum lorem.
@@ -37,7 +43,7 @@ Labore proident exercitation aliquip do consequat nostrud duis non id velit. Rep
   {
     slug: 'tears-of-the-giraffe',
     title: 'Consectetur adipiscing elit sed',
-    date: 'MAY 08, 2026',
+    date: '2026-05-08',
     content: `Tempor amet veniam nisi ad aliqua consequat aliqua do ad deserunt. Consectetur id labore fugiat nulla ad minim in excepteur ipsum do nisi nisi aliqua elit ex. Elit eiusmod sunt veniam officia voluptate laborum magna deserunt consequat exercitation elit ea est in veniam. Anim pariatur officia magna labore non sint sint amet et esse laborum ex consectetur elit. Aliquip dolor ad nulla lorem irure labore excepteur in proident eu.
 
 Exercitation enim aliquip amet eiusmod ad veniam anim voluptate mollit. Adipiscing lorem adipiscing irure sed ullamco enim est proident et anim ea deserunt est dolor laboris. Nulla aliquip amet eu do aliquip sit est ipsum qui labore. Proident id aliquip duis minim nostrud cupidatat ipsum mollit culpa eu ut aliquip elit dolore. Occaecat excepteur culpa reprehenderit cupidatat excepteur veniam nostrud reprehenderit voluptate duis et.
@@ -73,7 +79,7 @@ Et est voluptate ea consectetur labore ut ea est aliqua excepteur in magna minim
   {
     slug: 'wasting-tokens',
     title: 'Eiusmod tempor incididunt ut labore',
-    date: 'APR 22, 2026',
+    date: '2026-04-22',
     content: `Consectetur minim pariatur aliqua qui sunt eiusmod irure duis officia ut pariatur velit cillum ullamco. Ut elit veniam anim reprehenderit aliquip ullamco irure anim elit velit aliquip anim. Cillum minim esse enim ullamco sint aliquip labore consequat in amet do nisi reprehenderit duis laborum. Nostrud occaecat ex excepteur exercitation sint sint deserunt do reprehenderit. Et enim consequat consequat aliqua irure veniam mollit anim culpa consectetur.
 
 Consequat ut sed ut est pariatur voluptate sunt tempor ex laborum et occaecat irure. Voluptate qui et velit adipiscing consectetur amet incididunt proident anim quis culpa ex. Culpa duis id nostrud laboris reprehenderit commodo lorem ut ad velit veniam. Commodo est nulla elit sit amet proident deserunt cupidatat minim aliqua sunt reprehenderit. Ipsum quis esse fugiat in adipiscing esse labore magna commodo ipsum cupidatat.
@@ -103,3 +109,12 @@ Aliqua sint incididunt eu commodo sunt ut ullamco deserunt elit. Eu cillum nostr
 Dolore adipiscing ut ex esse ex non deserunt tempor exercitation quis non eu excepteur ex et. Laborum occaecat reprehenderit fugiat quis anim ipsum nostrud anim aliqua exercitation officia labore ad ipsum ea. Consequat irure dolor consectetur fugiat ullamco consectetur commodo laborum exercitation do. Excepteur elit consequat ea et sunt adipiscing enim pariatur lorem culpa sit. Duis incididunt dolor sunt lorem enim duis aliqua aliquip non qui pariatur quis voluptate amet.`,
   },
 ]
+
+export const featuredArticles: readonly Article[] = articleSources.map(
+  (source) => ({
+    ...source,
+    paragraphs: source.content
+      .split('\n\n')
+      .map((text, index) => ({ index, text })),
+  }),
+)

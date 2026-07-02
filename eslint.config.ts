@@ -12,6 +12,7 @@ import eslintPluginTailwindCSS from 'eslint-plugin-tailwindcss'
 import eslintConfigPrettier from 'eslint-config-prettier'
 
 import { noHardcodedLinksPlugin } from './eslint-rules/no-hardcoded-links.ts'
+import { noPlaceholderLinksPlugin } from './eslint-rules/no-placeholder-links.ts'
 
 const restrictedImportPaths = [
   {
@@ -60,6 +61,7 @@ export default defineConfig([
     plugins: {
       'simple-import-sort': simpleImportSort,
       'no-hardcoded-links': noHardcodedLinksPlugin,
+      'no-placeholder-links': noPlaceholderLinksPlugin,
     },
 
     languageOptions: {
@@ -92,6 +94,8 @@ export default defineConfig([
       'simple-import-sort/exports': 'error',
 
       'no-hardcoded-links/no-hardcoded-links': 'error',
+
+      'no-placeholder-links/no-placeholder-links': 'error',
 
       // eslint-plugin-tailwindcss@3.x is incompatible with ESLint 10
       'tailwindcss/classnames-order': 'off',

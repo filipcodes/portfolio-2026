@@ -1,16 +1,29 @@
 import { motion } from 'motion/react'
 import type { ReactNode } from 'react'
 
+type ScrollTarget = 'top' | 'next-viewport'
+
+type ScrollDirection = 'up' | 'down'
+
+const SCROLL_TOP_BY_TARGET: Record<ScrollTarget, () => number> = {
+  top: () => 0,
+  'next-viewport': () => window.innerHeight,
+}
+
+const DIRECTION_BY_TARGET: Record<ScrollTarget, ScrollDirection> = {
+  top: 'up',
+  'next-viewport': 'down',
+}
+
 interface InPageScrollProps {
-  direction: 'up' | 'down'
+  target: ScrollTarget
   iconPlacement: 'leading' | 'trailing'
-  scrollTo: number
   children: ReactNode
   className?: string
 }
 
 interface ScrollArrowProps {
-  direction: 'up' | 'down'
+  direction: ScrollDirection
 }
 
 function ScrollArrow({ direction }: ScrollArrowProps) {
@@ -29,17 +42,21 @@ function ScrollArrow({ direction }: ScrollArrowProps) {
 }
 
 export function InPageScroll({
-  direction,
+  target,
   iconPlacement,
-  scrollTo,
   children,
   className,
 }: InPageScrollProps) {
+  const direction = DIRECTION_BY_TARGET[target]
+
   return (
     <button
       type='button'
       onClick={() => {
-        window.scrollTo({ top: scrollTo, behavior: 'smooth' })
+        window.scrollTo({
+          top: SCROLL_TOP_BY_TARGET[target](),
+          behavior: 'smooth',
+        })
       }}
       className={`text-fg-muted hover:text-fg flex items-center gap-3 font-mono text-xs tracking-widest uppercase transition-colors ${className ?? ''}`}
     >

@@ -75,11 +75,7 @@ export function HeroSection() {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.8, duration: 0.6 }}
       >
-        <InPageScroll
-          direction='down'
-          iconPlacement='trailing'
-          scrollTo={window.innerHeight}
-        >
+        <InPageScroll target='next-viewport' iconPlacement='trailing'>
           Scroll
         </InPageScroll>
       </motion.div>

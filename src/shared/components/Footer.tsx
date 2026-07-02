@@ -9,11 +9,11 @@ export function Footer() {
     <footer className='mx-auto flex h-[calc(100dvh-72px)] max-h-200 w-full max-w-316 flex-col'>
       <div className='mx-auto w-full max-w-300 px-2 md:px-8'>
         <div className='border-border flex items-baseline justify-between border-b py-6'>
-          <InPageScroll direction='up' iconPlacement='leading' scrollTo={0}>
+          <InPageScroll target='top' iconPlacement='leading'>
             Back to top
           </InPageScroll>
           <span className='text-fg-muted font-mono text-xs tracking-widest uppercase'>
-            2026 — Issue 01
+            &#9400; 2026 — Issue 01
           </span>
         </div>
       </div>

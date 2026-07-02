@@ -4,6 +4,7 @@ import { Link } from '@/shared/components/Link'
 import { SectionHeading } from '@/shared/components/SectionHeading'
 import { featuredArticles } from '@/shared/constants/featuredArticles'
 import { estimateMinutesToRead } from '@/shared/utils/estimateMinutesToRead'
+import { formatArticleDate } from '@/shared/utils/formatArticleDate'
 
 export const Route = createFileRoute('/writing/')({
   component: WritingIndexPage,
@@ -26,7 +27,9 @@ function WritingIndexPage() {
                   {article.title}
                 </h2>
                 <p className='text-fg-muted mt-2 font-mono text-xs tracking-widest uppercase'>
-                  {article.date}
+                  <time dateTime={article.date}>
+                    {formatArticleDate(article.date)}
+                  </time>
                 </p>
               </div>
               <span className='text-fg-muted font-mono text-xs tracking-widest uppercase tabular-nums'>
