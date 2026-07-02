@@ -1,3 +1,4 @@
+import { AnimatePresence, motion } from 'motion/react'
 import { useEffect, useRef, useState } from 'react'
 
 import { ExternalLink } from '@/shared/components/ExternalLink'
@@ -18,6 +19,15 @@ export function Header() {
   const sentinelRef = useRef<HTMLDivElement>(null)
   const [isPill, setIsPill] = useState(false)
   const [isBordered, setIsBordered] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const query = window.matchMedia('(width < 48rem)')
+    const update = () => setIsMobile(query.matches)
+    update()
+    query.addEventListener('change', update)
+    return () => query.removeEventListener('change', update)
+  }, [])
 
   useEffect(() => {
     const sentinel = sentinelRef.current
@@ -50,6 +60,8 @@ export function Header() {
     }
   }, [])
 
+  const showStripped = isMobile && isPill
+
   return (
     <>
       <div
@@ -63,11 +75,20 @@ export function Header() {
       >
         <nav className='flex items-center justify-between'>
           <Link to='/'>
-            <img
-              src='/fs.png'
-              alt="Filip Sipos' logo depicting 'FS'"
-              className='w-15 transition-all duration-300 ease-out group-data-[pill=true]:w-10'
-            />
+            <div className='grid aspect-square w-15 place-items-center transition-all duration-300 ease-out group-data-[pill=true]:w-10'>
+              <AnimatePresence initial={false}>
+                <motion.img
+                  key={showStripped ? 'stripped' : 'classic'}
+                  src={showStripped ? '/logo/fs-no-border.png' : '/logo/fs.png'}
+                  alt="Filip Sipos' logo depicting 'FS'"
+                  className={`col-start-1 row-start-1 ${showStripped ? 'w-4/5' : 'w-full'}`}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3, ease: 'easeOut' }}
+                />
+              </AnimatePresence>
+            </div>
           </Link>
           <ul className='flex gap-4'>
             <li>

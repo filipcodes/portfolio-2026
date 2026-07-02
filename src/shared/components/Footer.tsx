@@ -4,6 +4,20 @@ import { Link } from '@/shared/components/Link'
 import { SectionHeading } from '@/shared/components/SectionHeading'
 import { links } from '@/shared/constants/links'
 
+const issueNumber = __APP_VERSION__
+  .split('.')
+  .slice(0, 2)
+  .map((part) => part.padStart(2, '0'))
+  .join('.')
+
+function CopyrightNotice() {
+  return (
+    <span className='text-fg-muted font-mono text-xs tracking-widest uppercase'>
+      Copyright &#9400; 2026 — Issue {issueNumber}
+    </span>
+  )
+}
+
 export function Footer() {
   return (
     <footer className='mx-auto flex h-[calc(100dvh-72px)] max-h-200 w-full max-w-316 flex-col'>
@@ -12,9 +26,9 @@ export function Footer() {
           <InPageScroll target='top' iconPlacement='leading'>
             Back to top
           </InPageScroll>
-          <span className='text-fg-muted font-mono text-xs tracking-widest uppercase'>
-            Copyright &#9400; 2026 — Issue 01
-          </span>
+          <div className='hidden md:block'>
+            <CopyrightNotice />
+          </div>
         </div>
       </div>
 
@@ -73,13 +87,17 @@ export function Footer() {
         className='relative flex items-end gap-[min(1.5vw,1.2rem)] overflow-hidden'
       >
         <img
-          src='/fs.png'
+          src='/logo/fs.png'
           alt=''
           className='aspect-square w-[min(10vw,7.9rem)] shrink-0 md:translate-y-[30.5%]'
         />
         <span className='block font-mono text-[min(12vw,9.5rem)] leading-none font-bold tracking-tighter whitespace-nowrap select-none md:translate-y-[25%]'>
           Filip Sipos.
         </span>
+      </div>
+
+      <div className='mx-auto w-full max-w-300 px-2 py-4 md:hidden'>
+        <CopyrightNotice />
       </div>
     </footer>
   )
