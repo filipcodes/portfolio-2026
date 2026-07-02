@@ -18,6 +18,7 @@ function WritingArticlePage() {
       <section className='pt-32 pb-32'>
         <Link
           to='/writing'
+          activeOptions={{ exact: true }}
           className='text-fg-muted font-mono text-xs tracking-widest uppercase'
         >
           ← Back to &quot;writing&quot;
@@ -31,6 +32,7 @@ function WritingArticlePage() {
     <article className='mx-auto max-w-2xl pt-32 pb-32'>
       <Link
         to='/writing'
+        activeOptions={{ exact: true }}
         className='text-fg-muted font-mono text-xs tracking-widest uppercase'
       >
         ← Back to &quot;writing&quot;

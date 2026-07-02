@@ -13,6 +13,13 @@ export const Route = createFileRoute('/writing/')({
 function WritingIndexPage() {
   return (
     <section className='pt-32'>
+      <Link
+        to='/'
+        className='text-fg-muted mb-12 inline-block font-mono text-xs tracking-widest uppercase'
+      >
+        ← Back to &quot;home&quot;
+      </Link>
+
       <SectionHeading label='Writing' addendum={featuredArticles.length} />
       <ul className='border-border border-t'>
         {featuredArticles.map((article) => (
