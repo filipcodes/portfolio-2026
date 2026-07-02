@@ -33,6 +33,7 @@ const restrictedImportPatterns = [
 
 const colocatedRoutePrivateFolders = [
   { folder: '@/routes/-home/', allowedImporter: 'src/routes/index.tsx' },
+  { folder: '@/routes/-not-found/', allowedImporter: 'src/routes/__root.tsx' },
 ]
 
 export default defineConfig([

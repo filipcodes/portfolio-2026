@@ -1,6 +1,7 @@
 import { createRootRoute, Outlet } from '@tanstack/react-router'
 import { MotionConfig } from 'motion/react'
 
+import { NotFoundPage } from '@/routes/-not-found/NotFoundPage'
 import { Footer } from '@/shared/components/Footer'
 import { Header } from '@/shared/components/Header'
 import { MouseFollower } from '@/shared/components/MouseFollower'
@@ -11,6 +12,7 @@ const SITE_TITLE = 'Filip Sipos · Senior Full-Stack Software Engineer'
 
 export const Route = createRootRoute({
   component: RootLayout,
+  notFoundComponent: NotFoundPage,
 })
 
 function RootLayout() {
