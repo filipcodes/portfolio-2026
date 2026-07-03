@@ -3,6 +3,7 @@ import { useRef } from 'react'
 
 import { viewportOnce } from '@/shared/constants/motion'
 import { useNumberShuffle } from '@/shared/hooks/useNumberShuffle'
+import { padTwoDigits } from '@/shared/utils/padTwoDigits'
 
 interface NumberShuffleProps {
   number: number
@@ -16,10 +17,7 @@ function NumberShuffle({ number }: NumberShuffleProps) {
   const ref = useRef<HTMLSpanElement>(null)
   const inView = useInView(ref, viewportOnce)
 
-  const displayNumber = useNumberShuffle(
-    number.toString().padStart(2, '0'),
-    inView,
-  )
+  const displayNumber = useNumberShuffle(padTwoDigits(number), inView)
 
   return <span ref={ref}>[{displayNumber}]</span>
 }

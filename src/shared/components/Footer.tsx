@@ -3,11 +3,12 @@ import { InPageScroll } from '@/shared/components/InPageScroll'
 import { Link } from '@/shared/components/Link'
 import { SectionHeading } from '@/shared/components/SectionHeading'
 import { links } from '@/shared/constants/links'
+import { padTwoDigits } from '@/shared/utils/padTwoDigits'
 
 const issueNumber = __APP_VERSION__
   .split('.')
   .slice(0, 2)
-  .map((part) => part.padStart(2, '0'))
+  .map(padTwoDigits)
   .join('.')
 
 function CopyrightNotice() {

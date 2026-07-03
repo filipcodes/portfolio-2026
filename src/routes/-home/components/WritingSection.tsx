@@ -11,6 +11,7 @@ import {
 } from '@/shared/constants/motion'
 import { estimateMinutesToRead } from '@/shared/utils/estimateMinutesToRead'
 import { formatArticleDate } from '@/shared/utils/formatArticleDate'
+import { padTwoDigits } from '@/shared/utils/padTwoDigits'
 
 export const WRITING_SECTION_ID = 'featured-writing'
 
@@ -40,13 +41,13 @@ export function WritingSection() {
             <Link
               to='/writing/$slug'
               params={{ slug: article.slug }}
-              className='group relative isolate block overflow-hidden py-8 hover:no-underline!'
+              className='group relative isolate block overflow-hidden py-4 hover:no-underline! md:py-8'
             >
               <span
                 aria-hidden
-                className='text-fg-subtle/25 group-hover:text-fg-subtle/45 pointer-events-none absolute top-1/2 left-0 -z-10 -translate-y-1/2 font-mono text-7xl leading-none tracking-tighter tabular-nums transition-colors duration-300 select-none md:text-[9rem]'
+                className='md:text-fg-subtle/25 text-fg-subtle/20 group-hover:text-fg-subtle/45 pointer-events-none absolute top-1/2 left-0 -z-10 -translate-y-1/2 font-mono text-[8rem] leading-none tracking-tighter tabular-nums transition-colors duration-300 select-none md:text-[9rem]'
               >
-                {(index + 1).toString().padStart(2, '0')}
+                {padTwoDigits(index + 1)}
               </span>
               <div className='flex items-baseline gap-6'>
                 <div className='flex-1 transition-transform duration-300 ease-out group-hover:translate-x-4'>
