@@ -40,10 +40,7 @@ interface GithubGraphNodeProps {
 
 function GithubGraphNode({ isToday, col }: GithubGraphNodeProps) {
   return (
-    <button
-      onClick={() => {
-        console.error('Hello World!')
-      }}
+    <div
       style={{ animationDelay: `${(col * COL_STAGGER_MS).toString()}ms` }}
       className={`${CELL_SIZE} animate-cell-in bg-elevated hover:bg-signal-dim rounded-xs ${
         isToday ? 'ring-signal ring-1 ring-inset' : ''
