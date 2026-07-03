@@ -1,4 +1,5 @@
 import { createRootRoute, Outlet, useRouterState } from '@tanstack/react-router'
+import { Analytics } from '@vercel/analytics/react'
 import { MotionConfig } from 'motion/react'
 
 import { NotFoundPage } from '@/routes/-not-found/NotFoundPage'
@@ -43,6 +44,7 @@ function RootLayout() {
         <Outlet />
       </main>
       <Footer />
+      <Analytics />
     </MotionConfig>
   )
 }
