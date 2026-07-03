@@ -19,7 +19,7 @@
 
   --color-fg: oklch(0.94 0.005 250);
   --color-fg-muted: oklch(0.72 0.01 250);
-  --color-fg-subtle: oklch(0.55 0.012 250);
+  --color-fg-subtle: oklch(0.6 0.012 250);
 
   --color-signal: oklch(0.72 0.16 275);
   --color-signal-dim: oklch(0.55 0.12 275);

@@ -38,9 +38,15 @@ function RootLayout() {
 
   return (
     <MotionConfig reducedMotion='user'>
+      <a
+        href='#main'
+        className='sr-only focus:not-sr-only focus:bg-elevated focus:border-border focus:fixed focus:top-4 focus:left-4 focus:z-100 focus:rounded-full focus:border focus:px-4 focus:py-2 focus:font-mono focus:text-xs focus:tracking-widest focus:uppercase'
+      >
+        Skip to content
+      </a>
       <Header />
       <MouseFollower />
-      <main className='mx-auto min-h-screen max-w-300 px-2 md:px-8'>
+      <main id='main' className='mx-auto min-h-screen max-w-300 px-2 md:px-8'>
         <Outlet />
       </main>
       <Footer />
