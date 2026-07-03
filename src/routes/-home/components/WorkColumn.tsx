@@ -54,7 +54,7 @@ export function WorkColumn({
       variants={fadeUp}
       data-state={state}
       onMouseEnter={onHover}
-      className={`group/card relative flex flex-col gap-6 overflow-hidden p-6 md:min-w-0 md:shrink-0 md:grow-0 md:transition-[flex-basis] md:ease-[cubic-bezier(0.16,1,0.3,1)] ${BASIS_CLASS_BY_STATE[state]} ${DURATION_CLASS_BY_KIND[duration]}`}
+      className={`group/card relative flex flex-col gap-6 overflow-hidden px-2 py-6 md:min-w-0 md:shrink-0 md:grow-0 md:px-6 md:transition-[flex-basis] md:ease-[cubic-bezier(0.16,1,0.3,1)] ${BASIS_CLASS_BY_STATE[state]} ${DURATION_CLASS_BY_KIND[duration]}`}
     >
       <p className='text-signal font-mono text-xs tracking-widest uppercase'>
         {work.tag}
