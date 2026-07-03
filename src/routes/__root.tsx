@@ -6,6 +6,7 @@ import { Footer } from '@/shared/components/Footer'
 import { Header } from '@/shared/components/Header'
 import { MouseFollower } from '@/shared/components/MouseFollower'
 import { SITE_TITLE } from '@/shared/constants/site'
+import { useCanonicalLink } from '@/shared/hooks/useCanonicalLink'
 import { useScrambledDocumentTitle } from '@/shared/hooks/useScrambledDocumentTitle'
 import { useTitleWave } from '@/shared/hooks/useTitleWave'
 
@@ -26,6 +27,11 @@ function RootLayout() {
     },
   })
 
+  const pathname = useRouterState({
+    select: (state) => state.location.pathname,
+  })
+
+  useCanonicalLink(pathname)
   useScrambledDocumentTitle(documentTitle)
   useTitleWave(documentTitle)
 

@@ -11,14 +11,14 @@ export type ColumnState = 'idle' | 'expanded' | 'collapsed'
 export type TransitionDuration = 'normal' | 'handoff'
 
 const BASIS_CLASS_BY_STATE: Record<ColumnState, string> = {
-  idle: 'md:basis-1/3',
-  expanded: 'md:basis-3/5',
-  collapsed: 'md:basis-1/5',
+  idle: 'md:basis-[calc(100%/var(--cols))]',
+  expanded: 'md:basis-[calc(100%-(var(--cols)-1)*40%/max(var(--cols)-1,1))]',
+  collapsed: 'md:basis-[calc(40%/max(var(--cols)-1,1))]',
 }
 
 const DURATION_CLASS_BY_KIND: Record<TransitionDuration, string> = {
-  normal: 'md:duration-[700ms]',
-  handoff: 'md:duration-[1100ms]', // Hovering from one card to another without exiting
+  normal: 'md:duration-700',
+  handoff: 'md:duration-1100', // Hovering from one card to another without exiting
 }
 
 const MEDIA_COMPONENTS = {
@@ -59,7 +59,7 @@ export function WorkColumn({
       <p className='text-signal font-mono text-xs tracking-widest uppercase'>
         {work.tag}
       </p>
-      <h3 className='font-display text-3xl tracking-tight md:text-5xl'>
+      <h3 className='font-display overflow-hidden text-3xl tracking-tight md:w-[calc(100cqw/var(--cols)-3rem)] md:text-5xl'>
         <ExternalLink
           href={work.href}
           className='group-data-[state=collapsed]/card:text-fg-subtle transition-colors duration-300 hover:no-underline!'
