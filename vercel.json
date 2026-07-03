@@ -1,3 +1,9 @@
 {
+  "redirects": [
+    {
+      "source": "/cv",
+      "destination": "https://docs.google.com/document/d/17kqXJ94veuIuesiAqK4E1BYld4Kn6rOyMWC1Vhp2zkw/export?format=pdf"
+    }
+  ],
   "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
 }

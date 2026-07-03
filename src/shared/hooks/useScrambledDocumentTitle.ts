@@ -1,10 +1,21 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 
 import { LETTERS, scramble } from '@/shared/utils/scramble'
 
 export function useScrambledDocumentTitle(title: string, duration = 1200) {
+  const previousTitle = useRef<string | null>(null)
+
   useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    // On first load keep the real title so crawlers never index a scrambled one.
+    const isNewTitle =
+      previousTitle.current !== null && previousTitle.current !== title
+
+    previousTitle.current = title
+
+    if (
+      !isNewTitle ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
       document.title = title
       return
     }

@@ -46,7 +46,7 @@ function HeroMainContent() {
       >
         <ExternalLink href={links.github}>GitHub</ExternalLink>
         <ExternalLink href={links.linkedin}>LinkedIn</ExternalLink>
-        <ExternalLink href='http://'>CV</ExternalLink>
+        <ExternalLink href={links.cv}>CV</ExternalLink>
       </motion.div>
     </motion.div>
   )
