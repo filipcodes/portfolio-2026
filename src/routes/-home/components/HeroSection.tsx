@@ -64,7 +64,7 @@ export function HeroSection() {
         <p>2026 · Portfolio</p>
         <p className='flex items-center justify-end gap-2'>
           <span className='bg-signal size-1.5 animate-pulse rounded-full' />
-          Open to work
+          Open to interesting problems
         </p>
       </motion.div>
 
