@@ -24,7 +24,7 @@ function WritingArticlePage() {
   const article = Route.useLoaderData()
 
   return (
-    <article className='mx-auto max-w-2xl pt-32 pb-32'>
+    <article className='mx-auto max-w-2xl py-32'>
       <Link
         to='/writing'
         activeOptions={{ exact: true }}

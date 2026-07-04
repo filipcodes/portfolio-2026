@@ -47,7 +47,7 @@ export default defineConfig([
     files: ['**/*.{ts,tsx}'],
     extends: [
       pluginRouter.configs['flat/recommended'],
-      eslintPluginTailwindCSS.configs['flat/recommended'],
+      eslintPluginTailwindCSS.configs.recommended,
       js.configs.recommended,
       tseslint.configs.strictTypeChecked,
       tseslint.configs.stylisticTypeChecked,
@@ -76,7 +76,7 @@ export default defineConfig([
     settings: {
       react: { version: '19.2' },
       tailwindcss: {
-        config: false,
+        cssConfigPath: 'src/main.css',
       },
     },
 
@@ -117,7 +117,7 @@ export default defineConfig([
         },
       ],
 
-      // eslint-plugin-tailwindcss@3.x is incompatible with ESLint 10
+      // Class ordering is owned by prettier-plugin-tailwindcss.
       'tailwindcss/classnames-order': 'off',
 
       'tailwindcss/no-custom-classname': 'off',

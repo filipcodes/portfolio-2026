@@ -13,7 +13,7 @@ export const works: readonly Work[] = [
   {
     tag: 'Interactive',
     title: 'Lorem ipsum dolor',
-    href: 'http://',
+    href: 'https://github.com/filipcodes/portfolio-2026',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor.',
     meta: '2026 · TypeScript',
@@ -30,7 +30,7 @@ export const works: readonly Work[] = [
   {
     tag: 'Experiment',
     title: 'Sed do eiusmod tempor',
-    href: 'http://',
+    href: 'https://github.com/filipcodes/portfolio-2026',
     description:
       'Duis aute irure dolor in reprehenderit voluptate velit esse cillum dolore.',
     meta: '2025 · Draft',
