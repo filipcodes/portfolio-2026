@@ -45,7 +45,7 @@ export function WritingSection() {
             >
               <span
                 aria-hidden
-                className='md:text-fg-subtle/25 text-fg-subtle/20 group-hover:text-fg-subtle/45 pointer-events-none absolute top-1/2 left-0 -z-10 -translate-y-1/2 font-mono text-[8rem] leading-none tracking-tighter tabular-nums transition-colors duration-300 select-none md:text-[9rem]'
+                className='md:text-fg-subtle/25 text-fg-subtle/20 group-hover:text-fg-subtle/45 pointer-events-none absolute top-1/2 left-0 -z-10 -translate-y-1/2 font-mono text-9xl leading-none tracking-tighter tabular-nums transition-colors duration-300 select-none md:text-[9rem]'
               >
                 {padTwoDigits(index + 1)}
               </span>
