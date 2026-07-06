@@ -1,10 +1,53 @@
 import { motion } from 'motion/react'
+import type { ReactNode } from 'react'
 
 import { WRITING_SECTION_ID } from '@/routes/-home/components/WritingSection'
-import { ExternalLink } from '@/shared/components/ExternalLink'
 import { InPageScroll } from '@/shared/components/InPageScroll'
 import { links } from '@/shared/constants/links'
 import { fadeUp, staggerContainer } from '@/shared/constants/motion'
+
+interface HeroCtaLinkProps {
+  href: string
+  children: ReactNode
+  emphasized?: boolean
+}
+
+function HeroCtaLink({ href, children, emphasized = false }: HeroCtaLinkProps) {
+  return (
+    <a
+      href={href}
+      target='_blank'
+      rel='noopener noreferrer'
+      className={`group inline-flex items-center gap-1 transition-colors ${
+        emphasized ? 'text-signal hover:text-fg' : 'text-fg-muted hover:text-fg'
+      }`}
+    >
+      <span
+        aria-hidden='true'
+        className={
+          emphasized
+            ? 'text-signal-dim group-hover:text-signal'
+            : 'text-fg-subtle group-hover:text-fg-muted'
+        }
+      >
+        [
+      </span>
+
+      {children}
+
+      <span
+        aria-hidden='true'
+        className={
+          emphasized
+            ? 'text-signal-dim group-hover:text-signal'
+            : 'text-fg-subtle group-hover:text-fg-muted'
+        }
+      >
+        ]
+      </span>
+    </a>
+  )
+}
 
 function HeroMainContent() {
   return (
@@ -22,31 +65,27 @@ function HeroMainContent() {
       </motion.h1>
       <motion.h2
         variants={fadeUp}
-        className='text-fg-muted mb-10 text-lg leading-relaxed md:text-xl'
+        className='text-fg-muted mb-10 max-w-2xl text-lg leading-relaxed md:text-xl'
       >
-        Senior full-stack developer.
+        Senior full-stack engineer building fast, reliable products that stay
+        maintainable at scale.
       </motion.h2>
       <motion.p
         variants={fadeUp}
-        className='text-fg-muted font-mono text-xs tracking-widest uppercase'
+        className='text-fg-muted mb-12 font-mono text-xs tracking-widest uppercase'
       >
-        Europe · UTC+01:00
-      </motion.p>
-
-      <motion.p
-        variants={fadeUp}
-        className='text-fg-subtle mb-6 font-mono text-xs tracking-widest uppercase'
-      >
-        48.15°N · 17.11°E
+        TypeScript · React · Node.js · AWS
       </motion.p>
 
       <motion.div
         variants={fadeUp}
-        className='flex flex-wrap gap-x-8 gap-y-2 font-mono text-xs tracking-widest uppercase'
+        className='flex flex-wrap gap-x-8 gap-y-3 font-mono text-sm tracking-widest uppercase'
       >
-        <ExternalLink href={links.github}>GitHub</ExternalLink>
-        <ExternalLink href={links.linkedin}>LinkedIn</ExternalLink>
-        <ExternalLink href={links.cv}>CV</ExternalLink>
+        <HeroCtaLink href={links.github}>GitHub</HeroCtaLink>
+        <HeroCtaLink href={links.linkedin} emphasized>
+          LinkedIn
+        </HeroCtaLink>
+        <HeroCtaLink href={links.cv}>CV</HeroCtaLink>
       </motion.div>
     </motion.div>
   )
@@ -61,7 +100,8 @@ export function HeroSection() {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.4, duration: 0.6 }}
       >
-        <p>2026 · Portfolio</p>
+        <p className='text-fg-subtle hidden md:block'>Europe · CET</p>
+        <p className='text-fg-subtle hidden md:block'>48.15°N · 17.11°E</p>
         <p className='flex items-center justify-end gap-2'>
           <span className='bg-signal size-1.5 animate-pulse rounded-full' />
           Open to interesting problems
