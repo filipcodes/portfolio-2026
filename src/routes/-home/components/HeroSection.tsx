@@ -1,7 +1,7 @@
 import { motion } from 'motion/react'
 import type { ReactNode } from 'react'
 
-import { WRITING_SECTION_ID } from '@/routes/-home/components/WritingSection'
+import { WORK_SECTION_ID } from '@/routes/-home/components/WorkSection'
 import { InPageScroll } from '@/shared/components/InPageScroll'
 import { links } from '@/shared/constants/links'
 import { fadeUp, staggerContainer } from '@/shared/constants/motion'
@@ -116,10 +116,7 @@ export function HeroSection() {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.8, duration: 0.6 }}
       >
-        <InPageScroll
-          target={`#${WRITING_SECTION_ID}`}
-          iconPlacement='trailing'
-        >
+        <InPageScroll target={`#${WORK_SECTION_ID}`} iconPlacement='trailing'>
           Scroll
         </InPageScroll>
       </motion.div>

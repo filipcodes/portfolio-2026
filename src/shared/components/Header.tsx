@@ -95,9 +95,9 @@ export function Header() {
             </div>
           </Link>
           <ul className='flex gap-4'>
-            <li>
+            {/* <li>
               <Link to='/writing'>Writing</Link>
-            </li>
+            </li> */}
 
             <li>
               <ExternalLink href={links.github}>GitHub</ExternalLink>

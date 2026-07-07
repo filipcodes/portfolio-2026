@@ -1,13 +1,16 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, notFound } from '@tanstack/react-router'
 
 import { Link } from '@/shared/components/Link'
 import { SectionHeading } from '@/shared/components/SectionHeading'
 import { featuredArticles } from '@/shared/constants/featuredArticles'
-import { SITE_NAME } from '@/shared/constants/site'
+import { SITE_NAME, WRITING_HIDDEN } from '@/shared/constants/site'
 import { estimateMinutesToRead } from '@/shared/utils/estimateMinutesToRead'
 import { formatArticleDate } from '@/shared/utils/formatArticleDate'
 
 export const Route = createFileRoute('/writing/')({
+  loader: () => {
+    if (WRITING_HIDDEN) throw notFound()
+  },
   head: () => ({ meta: [{ title: `Writing · ${SITE_NAME}` }] }),
   component: WritingIndexPage,
 })

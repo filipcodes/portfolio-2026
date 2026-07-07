@@ -2,21 +2,25 @@ import { createFileRoute, notFound } from '@tanstack/react-router'
 
 import { Link } from '@/shared/components/Link'
 import { featuredArticles } from '@/shared/constants/featuredArticles'
-import { SITE_NAME } from '@/shared/constants/site'
+import { SITE_NAME, WRITING_HIDDEN } from '@/shared/constants/site'
 import { estimateMinutesToRead } from '@/shared/utils/estimateMinutesToRead'
 import { formatArticleDate } from '@/shared/utils/formatArticleDate'
 
 export const Route = createFileRoute('/writing/$slug')({
   loader: ({ params }) => {
+    if (WRITING_HIDDEN) throw notFound()
+
     const article = featuredArticles.find((entry) => entry.slug === params.slug)
     if (!article) throw notFound()
     return article
   },
+
   head: ({ loaderData }) => ({
     meta: [
       { title: loaderData ? `${loaderData.title} · ${SITE_NAME}` : SITE_NAME },
     ],
   }),
+
   component: WritingArticlePage,
 })
 

@@ -24,7 +24,6 @@ export function NotFoundPage() {
 
       <div className='mt-12 flex flex-wrap gap-x-8 gap-y-2 font-mono text-xs tracking-widest uppercase'>
         <Link to='/'>← Back to &quot;home&quot;</Link>
-        <Link to='/writing'>Browse &quot;writing&quot;</Link>
       </div>
     </section>
   )
