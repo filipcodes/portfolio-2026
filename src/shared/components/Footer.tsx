@@ -41,9 +41,9 @@ export function Footer() {
               <li>
                 <Link to='/'>Home</Link>
               </li>
-              <li>
+              {/* <li>
                 <Link to='/writing'>Writing</Link>
-              </li>
+              </li> */}
             </ul>
           </div>
 

@@ -10,6 +10,8 @@ import { Reveal } from '@/shared/components/Reveal'
 import { SectionHeading } from '@/shared/components/SectionHeading'
 import { staggerContainer, viewportOnce } from '@/shared/constants/motion'
 
+export const WORK_SECTION_ID = 'selected-work'
+
 const MAX_COLUMNS = 3
 
 interface HoverState {
@@ -54,7 +56,7 @@ export function WorkSection() {
   const count = columns.length
 
   return (
-    <section>
+    <section id={WORK_SECTION_ID} className='scroll-mt-24'>
       <Reveal>
         <SectionHeading label='Featured Work' addendum={count} />
       </Reveal>
