@@ -22,7 +22,8 @@ export const works: readonly Work[] = [
     tag: 'Public Client Work',
     title: 'Zircuit',
     href: 'https://explorer.zircuit.com/',
-    description: 'I co-architected the Zircuit Explorer and Bridge.',
+    description:
+      'I co-architected the Zircuit Explorer and Bridge - the primary interfaces to an Ethereum L2 focused on AI-driven security - and led the dev team for part of the engagement.',
     metaTags: ['2025', 'React', 'Web3'],
     media: {
       src: zircuitScreenshot,
@@ -36,7 +37,7 @@ export const works: readonly Work[] = [
     title: 'The Stream Protection Portal',
     href: 'https://www.thestreamplan.com/',
     description:
-      'I worked closely with major US companies adapting the portal.',
+      'I co-developed The Stream Protection Portal - a digital layer over US insurance paperwork that plugs into the processes and documentation of four major United States insurers.',
     metaTags: ['2025', 'Next.js', 'Insurance'],
     media: {
       src: streamPlanScreenshot,
