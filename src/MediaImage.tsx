@@ -34,7 +34,7 @@ export function MediaImage({ src, alt, label, href }: MediaImageProps) {
         src={src}
         alt={alt}
         loading='lazy'
-        className='aspect-video w-full object-cover object-top saturate-[0.65] md:aspect-auto md:h-80'
+        className='aspect-2/1 w-full object-cover object-top saturate-[0.65] md:aspect-auto md:h-80'
       />
     </figure>
   )
