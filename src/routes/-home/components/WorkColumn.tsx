@@ -1,104 +1,64 @@
 import { AnimatePresence, motion } from 'motion/react'
-import type { ReactNode } from 'react'
 
-import { GithubGraph } from '@/GithubGraph'
-import type { Work, WorkMedia } from '@/routes/-home/constants/works'
-import { ExternalLink } from '@/shared/components/ExternalLink'
+import { MediaImage } from '@/MediaImage'
+import type { Work } from '@/routes/-home/constants/works'
+import { UnstyledExternalLink } from '@/shared/components/ExternalLink'
 import { fadeUp, reveal } from '@/shared/constants/motion'
 
-export type ColumnState = 'idle' | 'expanded' | 'collapsed'
-
-export type TransitionDuration = 'normal' | 'handoff'
+export type ColumnState = 'expanded' | 'collapsed'
 
 const BASIS_CLASS_BY_STATE: Record<ColumnState, string> = {
-  idle: 'md:basis-[calc(100%/var(--cols))]',
-  expanded: 'md:basis-[calc(100%-(var(--cols)-1)*40%/max(var(--cols)-1,1))]',
-  collapsed: 'md:basis-[calc(40%/max(var(--cols)-1,1))]',
-}
-
-const DURATION_CLASS_BY_KIND: Record<TransitionDuration, string> = {
-  normal: 'md:duration-700',
-  handoff: 'md:duration-1100', // Hovering from one card to another without exiting
-}
-
-const MEDIA_COMPONENTS = {
-  'github-graph': GithubGraph,
-} as const satisfies Record<WorkMedia, () => ReactNode>
-
-interface WorkMediaSlotProps {
-  media: WorkMedia
-}
-
-function WorkMediaSlot({ media }: WorkMediaSlotProps) {
-  const Component = MEDIA_COMPONENTS[media]
-  return <Component />
+  expanded: 'basis-[calc(100%-(var(--cols)-1)*40%/max(var(--cols)-1,1))]',
+  collapsed: 'basis-[calc(40%/max(var(--cols)-1,1))]',
 }
 
 interface WorkColumnProps {
   work: Work
   state: ColumnState
-  duration: TransitionDuration
-  onHover: () => void
 }
 
-export function WorkColumn({
-  work,
-  state,
-  duration,
-  onHover,
-}: WorkColumnProps) {
+export function WorkColumn({ work, state }: WorkColumnProps) {
   const isExpanded = state === 'expanded'
 
   return (
     <motion.li
       variants={fadeUp}
       data-state={state}
-      onMouseEnter={onHover}
-      className={`group/card relative flex flex-col gap-6 overflow-hidden px-2 py-6 md:min-w-0 md:shrink-0 md:grow-0 md:px-6 md:transition-[flex-basis] md:ease-[cubic-bezier(0.16,1,0.3,1)] ${BASIS_CLASS_BY_STATE[state]} ${DURATION_CLASS_BY_KIND[duration]}`}
+      className={`group/card relative flex min-w-0 shrink-0 grow-0 flex-col gap-6 overflow-hidden p-6 transition-[flex-basis] duration-1100 ease-[cubic-bezier(0.16,1,0.3,1)] ${BASIS_CLASS_BY_STATE[state]}`}
     >
       <p className='text-signal font-mono text-xs tracking-widest uppercase'>
         {work.tag}
       </p>
-      <h3 className='font-display overflow-hidden text-3xl tracking-tight md:w-[calc(100cqw/var(--cols)-3rem)] md:text-5xl'>
-        <ExternalLink
+      <h3 className='font-display w-[calc(100cqw/var(--cols)-3rem)] overflow-hidden text-5xl tracking-tight'>
+        <UnstyledExternalLink
           href={work.href}
-          className='group-data-[state=collapsed]/card:text-fg-subtle transition-colors duration-300 hover:no-underline!'
+          className='group-data-[state=collapsed]/card:text-fg-subtle text-gray-100 transition-colors duration-300 hover:text-white active:text-blue-300'
         >
           {work.title}
-        </ExternalLink>
+        </UnstyledExternalLink>
       </h3>
 
       <AnimatePresence>
         {isExpanded && (
-          <motion.p
-            initial={reveal.initial}
-            animate={reveal.animate}
-            exit={reveal.exit}
-            className='text-fg-muted text-sm leading-relaxed'
+          <motion.div
+            initial={{ ...reveal.initial, height: 0 }}
+            animate={{ ...reveal.animate, height: 'auto' }}
+            exit={{ ...reveal.exit, height: 0 }}
+            className='flex flex-col gap-6 overflow-hidden'
           >
-            {work.description}
-          </motion.p>
+            <p className='text-fg-muted text-sm leading-relaxed'>
+              {work.description}
+            </p>
+            {work.media && <MediaImage {...work.media} />}
+          </motion.div>
         )}
       </AnimatePresence>
 
-      {work.media && (
-        <AnimatePresence>
-          {isExpanded && (
-            <motion.div
-              initial={{ ...reveal.initial, maxHeight: 0 }}
-              animate={{ ...reveal.animate, maxHeight: 260 }}
-              exit={{ ...reveal.exit, maxHeight: 0 }}
-              className='overflow-hidden'
-            >
-              <WorkMediaSlot media={work.media} />
-            </motion.div>
-          )}
-        </AnimatePresence>
-      )}
-
-      <p className='text-fg-muted mt-auto font-mono text-xs tracking-widest uppercase'>
-        {work.meta}
-      </p>
+      <div className="text-fg-muted mt-auto flex gap-2 font-mono text-xs tracking-widest uppercase [&>span+span]:before:mr-2 [&>span+span]:before:content-['·']">
+        {work.metaTags.map((tag) => (
+          <span key={tag}>{tag}</span>
+        ))}
+      </div>
     </motion.li>
   )
 }
