@@ -1,5 +1,5 @@
-import streamPlanScreenshot from '@/assets/work/stream-plan.png'
-import zircuitScreenshot from '@/assets/work/zircuit.png'
+import streamPlanScreenshot from '@/assets/work/stream-plan.webp'
+import zircuitScreenshot from '@/assets/work/zircuit.webp'
 
 export interface WorkMedia {
   src: string
