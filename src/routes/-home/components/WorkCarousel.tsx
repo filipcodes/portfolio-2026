@@ -86,7 +86,7 @@ export function WorkCarousel({ works }: WorkCarouselProps) {
     >
       {/* overflow-anchor:none stops the browser from scrolling the page when a card's text reflows on state change */}
       <motion.ul
-        className='border-border divide-border after:inset-shadow-x @container relative flex h-[680px] divide-x border-y [overflow-anchor:none] after:pointer-events-none after:absolute after:inset-0 after:z-10 after:content-[""]'
+        className='border-border divide-border after:inset-shadow-x @container relative flex h-[700px] divide-x border-y [overflow-anchor:none] after:pointer-events-none after:absolute after:inset-0 after:z-10 after:content-[""]'
         style={{ '--cols': count } as CSSProperties}
         variants={staggerContainer}
         initial='hidden'

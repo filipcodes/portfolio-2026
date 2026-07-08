@@ -8,8 +8,8 @@ import { fadeUp, reveal } from '@/shared/constants/motion'
 export type ColumnState = 'expanded' | 'collapsed'
 
 const BASIS_CLASS_BY_STATE: Record<ColumnState, string> = {
-  expanded: 'basis-[calc(100%-(var(--cols)-1)*40%/max(var(--cols)-1,1))]',
-  collapsed: 'basis-[calc(40%/max(var(--cols)-1,1))]',
+  expanded: 'basis-[calc(100%-(var(--cols)-1)*30%/max(var(--cols)-1,1))]',
+  collapsed: 'basis-[calc(30%/max(var(--cols)-1,1))]',
 }
 
 interface WorkColumnProps {
@@ -24,12 +24,12 @@ export function WorkColumn({ work, state }: WorkColumnProps) {
     <motion.li
       variants={fadeUp}
       data-state={state}
-      className={`group/card relative flex min-w-0 shrink-0 grow-0 flex-col gap-6 overflow-hidden p-6 transition-[flex-basis] duration-1100 ease-[cubic-bezier(0.16,1,0.3,1)] ${BASIS_CLASS_BY_STATE[state]}`}
+      className={`group/card relative flex min-w-0 shrink-0 grow-0 flex-col overflow-hidden p-6 transition-[flex-basis] duration-1100 ease-[cubic-bezier(0.16,1,0.3,1)] ${BASIS_CLASS_BY_STATE[state]}`}
     >
-      <p className='text-signal font-mono text-xs tracking-widest uppercase'>
+      <p className='text-signal mb-4 font-mono text-xs tracking-widest uppercase'>
         {work.tag}
       </p>
-      <h3 className='font-display w-[calc(100cqw/var(--cols)-3rem)] overflow-hidden text-5xl tracking-tight'>
+      <h3 className='font-display mb-8 w-[calc(100cqw/var(--cols)-3rem)] overflow-hidden text-5xl tracking-tight'>
         <UnstyledExternalLink
           href={work.href}
           className='group-data-[state=collapsed]/card:text-fg-subtle text-gray-100 transition-colors duration-300 hover:text-white active:text-blue-300'

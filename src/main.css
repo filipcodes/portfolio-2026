@@ -31,10 +31,8 @@
 
 @theme inline {
   --inset-shadow-x:
-    inset 32px 0 32px -32px var(--color-bg),
-    inset 32px 0 32px -32px var(--color-bg),
-    inset -32px 0 32px -32px var(--color-bg),
-    inset -32px 0 32px -32px var(--color-bg);
+    inset 64px 0 32px -32px var(--color-bg),
+    inset -64px 0 32px -32px var(--color-bg);
 }
 
 @layer base {
