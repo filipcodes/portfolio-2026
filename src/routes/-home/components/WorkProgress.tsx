@@ -5,13 +5,15 @@ import {
   type TargetAndTransition,
   useIsPresent,
   useMotionValue,
+  useSpring,
 } from 'motion/react'
 import { useEffect, useRef } from 'react'
 
 import { easeOutExpo } from '@/shared/constants/motion'
 
 const AUTO_ADVANCE_S = 8
-const SPEED_RAMP_S = 0.45
+
+const FOLLOW_SPRING = { visualDuration: 0.5, bounce: 0 }
 
 const drainExit: TargetAndTransition = {
   scaleX: [1, 1, 0],
@@ -41,6 +43,7 @@ interface WorkProgressProps {
 export function WorkProgress({ paused, onComplete }: WorkProgressProps) {
   const isPresent = useIsPresent()
   const progress = useMotionValue(0)
+  const barScaleX = useSpring(progress, FOLLOW_SPRING)
   const timer = useRef<AnimationPlaybackControls | null>(null)
 
   useEffect(() => {
@@ -50,7 +53,6 @@ export function WorkProgress({ paused, onComplete }: WorkProgressProps) {
       onComplete,
     })
 
-    controls.speed = 0
     timer.current = controls
     return () => {
       controls.stop()
@@ -60,13 +62,10 @@ export function WorkProgress({ paused, onComplete }: WorkProgressProps) {
   useEffect(() => {
     const controls = timer.current
     if (!controls || !isPresent) return
-    const ramp = animate(
-      controls,
-      { speed: paused ? 0 : 1 },
-      { duration: SPEED_RAMP_S, ease: 'easeOut' },
-    )
-    return () => {
-      ramp.stop()
+    if (paused) {
+      controls.pause()
+    } else {
+      controls.play()
     }
   }, [paused, isPresent])
 
@@ -77,7 +76,7 @@ export function WorkProgress({ paused, onComplete }: WorkProgressProps) {
   return (
     <motion.div
       aria-hidden
-      style={{ scaleX: progress }}
+      style={{ scaleX: barScaleX }}
       variants={{
         exit: () => (progress.get() >= 1 ? drainExit : sprintDrainExit),
       }}
