@@ -6,7 +6,10 @@ type ExternalLinkProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
   href: string
 }
 
-export function UnstyledExternalLink({ children, ...props }: ExternalLinkProps) {
+export function UnstyledExternalLink({
+  children,
+  ...props
+}: ExternalLinkProps) {
   return (
     <a target='_blank' rel='noopener noreferrer' {...props}>
       {children}
