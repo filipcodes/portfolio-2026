@@ -29,10 +29,10 @@
   --color-alert: oklch(0.65 0.18 28);
 }
 
-@theme inline {
-  --inset-shadow-x:
-    inset 64px 0 32px -32px var(--color-bg),
-    inset -64px 0 32px -32px var(--color-bg);
+@utility fade-x {
+  background-image:
+    linear-gradient(to right, var(--color-bg), transparent 3rem),
+    linear-gradient(to left, var(--color-bg), transparent 3rem);
 }
 
 @layer base {

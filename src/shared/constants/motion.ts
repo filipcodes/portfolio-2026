@@ -20,18 +20,3 @@ export const staggerContainer: Variants = {
 }
 
 export const viewportOnce = { once: true, margin: '0px 0px -12% 0px' } as const
-
-// Enter/exit motion for content that fades in alongside an expanded column
-export const reveal = {
-  initial: { opacity: 0, y: 8 },
-  animate: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.45, delay: 0.5, ease: easeOutExpo },
-  },
-  exit: {
-    opacity: 0,
-    y: 8,
-    transition: { duration: 0.3, ease: easeOutExpo },
-  },
-}

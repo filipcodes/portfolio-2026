@@ -1,5 +1,5 @@
-import { motion } from 'motion/react'
-import { type CSSProperties, useEffect, useState } from 'react'
+import { motion, useInView, useReducedMotion } from 'motion/react'
+import { type CSSProperties, useRef, useState } from 'react'
 
 import {
   type ColumnState,
@@ -8,8 +8,6 @@ import {
 import type { Work } from '@/routes/-home/constants/works'
 import { Reveal } from '@/shared/components/Reveal'
 import { staggerContainer, viewportOnce } from '@/shared/constants/motion'
-
-const AUTO_ADVANCE_MS = 6000
 
 const stepButtonClassName =
   'border-border text-fg-muted hover:border-fg-subtle hover:text-fg active:text-signal flex size-10 cursor-pointer items-center justify-center border font-mono transition-colors duration-150'
@@ -54,39 +52,40 @@ interface WorkCarouselProps {
 }
 
 export function WorkCarousel({ works }: WorkCarouselProps) {
+  const listRef = useRef<HTMLUListElement>(null)
+  const inView = useInView(listRef, { amount: 0.5 })
+  const reducedMotion = useReducedMotion()
   const [active, setActive] = useState(0)
-  const [paused, setPaused] = useState(false)
+  const [hovered, setHovered] = useState(false)
+  const [focused, setFocused] = useState(false)
 
   const count = works.length
+  const autoAdvance = count > 1 && inView && !reducedMotion
 
   const step = (direction: 1 | -1) => {
     setActive((prev) => (prev + direction + count) % count)
   }
 
-  useEffect(() => {
-    if (count <= 1 || paused) return
-
-    const id = setInterval(() => {
-      setActive((prev) => (prev + 1) % count)
-    }, AUTO_ADVANCE_MS)
-
-    return () => {
-      clearInterval(id)
-    }
-  }, [count, paused])
-
   return (
     <div
-      onMouseEnter={() => {
-        setPaused(true)
+      onPointerEnter={() => {
+        setHovered(true)
       }}
-      onMouseLeave={() => {
-        setPaused(false)
+      onPointerLeave={() => {
+        setHovered(false)
+      }}
+      onFocus={(event) => {
+        if (event.target.matches(':focus-visible')) setFocused(true)
+      }}
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) {
+          setFocused(false)
+        }
       }}
     >
-      {/* overflow-anchor:none stops the browser from scrolling the page when a card's text reflows on state change */}
       <motion.ul
-        className='border-border divide-border after:inset-shadow-x @container relative flex h-[700px] divide-x border-y [overflow-anchor:none] after:pointer-events-none after:absolute after:inset-0 after:z-10 after:content-[""]'
+        ref={listRef}
+        className='border-border after:fade-x @container relative flex h-[700px] border-y after:pointer-events-none after:absolute after:inset-0 after:z-10 after:content-[""]'
         style={{ '--cols': count } as CSSProperties}
         variants={staggerContainer}
         initial='hidden'
@@ -98,6 +97,14 @@ export function WorkCarousel({ works }: WorkCarouselProps) {
             key={work.title}
             work={work}
             state={getColumnState(active, index)}
+            timerPaused={hovered || focused}
+            onAutoAdvance={
+              autoAdvance && index === active
+                ? () => {
+                    step(1)
+                  }
+                : undefined
+            }
           />
         ))}
       </motion.ul>
