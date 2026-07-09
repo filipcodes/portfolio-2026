@@ -1,17 +1,10 @@
-import {
-  AnimatePresence,
-  motion,
-  type TargetAndTransition,
-  useAnimationFrame,
-  useIsPresent,
-  useMotionValue,
-} from 'motion/react'
-import { useRef } from 'react'
+import { AnimatePresence, motion } from 'motion/react'
 
 import { MediaImage } from '@/MediaImage'
+import { WorkProgress } from '@/routes/-home/components/WorkProgress'
 import type { Work } from '@/routes/-home/constants/works'
 import { UnstyledExternalLink } from '@/shared/components/ExternalLink'
-import { easeOutExpo, fadeUp } from '@/shared/constants/motion'
+import { fadeUp } from '@/shared/constants/motion'
 
 export type ColumnState = 'expanded' | 'collapsed'
 
@@ -22,71 +15,6 @@ const BASIS_CLASS_BY_STATE: Record<ColumnState, string> = {
 }
 
 const easeCarousel = 'ease-[cubic-bezier(0.16,1,0.3,1)]'
-
-const AUTO_ADVANCE_S = 8
-const SPEED_SMOOTHING = 6
-
-// Handoff: the full bar drains toward the divider; the origin flips while scaleX sits at 1, so it is invisible
-const drainExit: TargetAndTransition = {
-  scaleX: [1, 1, 0],
-  originX: [0, 1, 1],
-  transition: {
-    duration: 0.6,
-    times: [0, 0.25, 1],
-    ease: ['linear', easeOutExpo],
-  },
-}
-
-// Manual steps sprint the remaining distance home before the same drain
-const sprintDrainExit: TargetAndTransition = {
-  scaleX: [null, 1, 1, 0],
-  originX: [0, 0, 1, 1],
-  transition: {
-    duration: 1.1,
-    times: [0, 0.45, 0.59, 1],
-    ease: [easeOutExpo, 'linear', easeOutExpo],
-  },
-}
-
-interface WorkProgressProps {
-  paused: boolean
-  onComplete: () => void
-}
-
-function WorkProgress({ paused, onComplete }: WorkProgressProps) {
-  const isPresent = useIsPresent()
-  const scaleX = useMotionValue(0)
-  const progress = useRef(0)
-  const speed = useRef(0)
-
-  useAnimationFrame((_, delta) => {
-    if (!isPresent || progress.current >= 1) return
-
-    const dt = Math.min(delta, 100) / 1000
-    const targetSpeed = paused ? 0 : 1
-    speed.current +=
-      (targetSpeed - speed.current) * Math.min(1, SPEED_SMOOTHING * dt)
-    progress.current = Math.min(
-      1,
-      progress.current + (speed.current * dt) / AUTO_ADVANCE_S,
-    )
-
-    scaleX.set(progress.current)
-    if (progress.current >= 1) onComplete()
-  })
-
-  return (
-    <motion.div
-      aria-hidden
-      style={{ scaleX }}
-      variants={{
-        exit: () => (progress.current >= 1 ? drainExit : sprintDrainExit),
-      }}
-      exit='exit'
-      className='bg-signal absolute inset-x-0 top-0 h-0.5 origin-left'
-    />
-  )
-}
 
 interface WorkColumnProps {
   work: Work

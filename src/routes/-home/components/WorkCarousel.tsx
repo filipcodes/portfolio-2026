@@ -60,10 +60,15 @@ export function WorkCarousel({ works }: WorkCarouselProps) {
   const [focused, setFocused] = useState(false)
 
   const count = works.length
+  const engaged = hovered || focused
   const autoAdvance = count > 1 && inView && !reducedMotion
 
   const step = (direction: 1 | -1) => {
     setActive((prev) => (prev + direction + count) % count)
+  }
+
+  const advance = () => {
+    setActive((prev) => (prev + 1) % count)
   }
 
   return (
@@ -97,13 +102,9 @@ export function WorkCarousel({ works }: WorkCarouselProps) {
             key={work.title}
             work={work}
             state={getColumnState(active, index)}
-            timerPaused={hovered || focused}
+            timerPaused={engaged}
             onAutoAdvance={
-              autoAdvance && index === active
-                ? () => {
-                    step(1)
-                  }
-                : undefined
+              autoAdvance && index === active ? advance : undefined
             }
           />
         ))}

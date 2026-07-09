@@ -1,4 +1,4 @@
-import type { Variants } from 'motion/react'
+import { stagger, type Variants } from 'motion/react'
 
 export const easeOutExpo: [number, number, number, number] = [0.16, 1, 0.3, 1]
 
@@ -11,11 +11,10 @@ export const fadeUp: Variants = {
   },
 }
 
-// Children inherit this state via `variants={fadeUp}`, offset by the stagger.
 export const staggerContainer: Variants = {
   hidden: {},
   visible: {
-    transition: { staggerChildren: 0.08, delayChildren: 0.08 },
+    transition: { delayChildren: stagger(0.08, { startDelay: 0.08 }) },
   },
 }
 
