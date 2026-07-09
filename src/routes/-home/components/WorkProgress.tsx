@@ -1,19 +1,17 @@
 import {
-  animate,
-  type AnimationPlaybackControls,
   motion,
   type TargetAndTransition,
+  useAnimationFrame,
   useIsPresent,
   useMotionValue,
   useSpring,
 } from 'motion/react'
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 
 import { easeOutExpo } from '@/shared/constants/motion'
 
 const AUTO_ADVANCE_S = 8
-
-const FOLLOW_SPRING = { visualDuration: 0.5, bounce: 0 }
+const SPEED_SPRING = { visualDuration: 0.45, bounce: 0 }
 
 const drainExit: TargetAndTransition = {
   scaleX: [1, 1, 0],
@@ -40,43 +38,35 @@ interface WorkProgressProps {
   onComplete: () => void
 }
 
+// Deliberately hand-rolled clock — see the animation policy in CLAUDE.md before replacing it with animate() controls
 export function WorkProgress({ paused, onComplete }: WorkProgressProps) {
   const isPresent = useIsPresent()
   const progress = useMotionValue(0)
-  const barScaleX = useSpring(progress, FOLLOW_SPRING)
-  const timer = useRef<AnimationPlaybackControls | null>(null)
+  const speed = useSpring(0, SPEED_SPRING)
 
+  // useSpring reads its source argument only once; retargeting must go through set()
   useEffect(() => {
-    const controls = animate(progress, [0, 1], {
-      duration: AUTO_ADVANCE_S,
-      ease: 'linear',
-      onComplete,
-    })
+    speed.set(paused ? 0 : 1)
+  }, [paused, speed])
 
-    timer.current = controls
-    return () => {
-      controls.stop()
-    }
-  }, [progress, onComplete])
+  useAnimationFrame((_, delta) => {
+    const value = progress.get()
+    if (!isPresent || value >= 1) return
 
-  useEffect(() => {
-    const controls = timer.current
-    if (!controls || !isPresent) return
-    if (paused) {
-      controls.pause()
-    } else {
-      controls.play()
-    }
-  }, [paused, isPresent])
+    const dt = Math.min(delta, 100) / 1000
+    const next = Math.min(
+      1,
+      value + (Math.max(0, speed.get()) * dt) / AUTO_ADVANCE_S,
+    )
 
-  useEffect(() => {
-    if (!isPresent) timer.current?.stop()
-  }, [isPresent])
+    progress.set(next)
+    if (next >= 1) onComplete()
+  })
 
   return (
     <motion.div
       aria-hidden
-      style={{ scaleX: barScaleX }}
+      style={{ scaleX: progress }}
       variants={{
         exit: () => (progress.get() >= 1 ? drainExit : sprintDrainExit),
       }}
