@@ -1,5 +1,6 @@
 import globals from 'globals'
 import reactHooks from 'eslint-plugin-react-hooks'
+import reactHooksAddons from 'eslint-plugin-react-hooks-addons'
 import reactRefresh from 'eslint-plugin-react-refresh'
 import react from 'eslint-plugin-react'
 import jsxA11y from 'eslint-plugin-jsx-a11y'
@@ -61,6 +62,7 @@ export default defineConfig([
 
     plugins: {
       'simple-import-sort': simpleImportSort,
+      'react-hooks-addons': reactHooksAddons,
       'no-hardcoded-links': noHardcodedLinksPlugin,
       'no-placeholder-links': noPlaceholderLinksPlugin,
     },
@@ -85,6 +87,9 @@ export default defineConfig([
       'react-hooks/exhaustive-deps': 'error',
       'react-hooks/incompatible-library': 'error',
       'react-hooks/unsupported-syntax': 'error',
+
+      // exhaustive-deps only catches missing deps; this catches unused ones (mark intentional trigger-deps with /* effect dep */)
+      'react-hooks-addons/no-unused-deps': 'error',
 
       // Curated picks from eslint-plugin-react beyond flat/recommended.
       'react/no-array-index-key': 'error',

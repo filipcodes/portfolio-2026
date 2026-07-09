@@ -2,7 +2,6 @@ const styles = {
   base: 'text-gray-100 underline-offset-4 transition-colors duration-150',
   hover: 'hover:text-white hover:underline',
   pressed: 'active:text-blue-300',
-  visited: 'visited:text-gray-100',
   disabled:
     'aria-disabled:cursor-not-allowed aria-disabled:opacity-50 aria-disabled:hover:no-underline',
 }

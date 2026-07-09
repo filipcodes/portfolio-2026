@@ -1,51 +1,33 @@
 import { AnimatePresence, motion } from 'motion/react'
-import type { ReactNode } from 'react'
 
-import { GithubGraph } from '@/GithubGraph'
-import type { Work, WorkMedia } from '@/routes/-home/constants/works'
-import { ExternalLink } from '@/shared/components/ExternalLink'
-import { fadeUp, reveal } from '@/shared/constants/motion'
+import { MediaImage } from '@/MediaImage'
+import { WorkProgress } from '@/routes/-home/components/WorkProgress'
+import type { Work } from '@/routes/-home/constants/works'
+import { UnstyledExternalLink } from '@/shared/components/ExternalLink'
+import { fadeUp } from '@/shared/constants/motion'
 
-export type ColumnState = 'idle' | 'expanded' | 'collapsed'
+export type ColumnState = 'expanded' | 'collapsed'
 
-export type TransitionDuration = 'normal' | 'handoff'
-
+// Collapsed columns share 30% of the row; the expanded one takes the rest
 const BASIS_CLASS_BY_STATE: Record<ColumnState, string> = {
-  idle: 'md:basis-[calc(100%/var(--cols))]',
-  expanded: 'md:basis-[calc(100%-(var(--cols)-1)*40%/max(var(--cols)-1,1))]',
-  collapsed: 'md:basis-[calc(40%/max(var(--cols)-1,1))]',
+  expanded: 'basis-[calc(100%-min(var(--cols)-1,1)*30%)]',
+  collapsed: 'basis-[calc(30%/max(var(--cols)-1,1))]',
 }
 
-const DURATION_CLASS_BY_KIND: Record<TransitionDuration, string> = {
-  normal: 'md:duration-700',
-  handoff: 'md:duration-1100', // Hovering from one card to another without exiting
-}
-
-const MEDIA_COMPONENTS = {
-  'github-graph': GithubGraph,
-} as const satisfies Record<WorkMedia, () => ReactNode>
-
-interface WorkMediaSlotProps {
-  media: WorkMedia
-}
-
-function WorkMediaSlot({ media }: WorkMediaSlotProps) {
-  const Component = MEDIA_COMPONENTS[media]
-  return <Component />
-}
+const easeCarousel = 'ease-[cubic-bezier(0.16,1,0.3,1)]'
 
 interface WorkColumnProps {
   work: Work
   state: ColumnState
-  duration: TransitionDuration
-  onHover: () => void
+  timerPaused: boolean
+  onAutoAdvance?: () => void
 }
 
 export function WorkColumn({
   work,
   state,
-  duration,
-  onHover,
+  timerPaused,
+  onAutoAdvance,
 }: WorkColumnProps) {
   const isExpanded = state === 'expanded'
 
@@ -53,52 +35,51 @@ export function WorkColumn({
     <motion.li
       variants={fadeUp}
       data-state={state}
-      onMouseEnter={onHover}
-      className={`group/card relative flex flex-col gap-6 overflow-hidden px-2 py-6 md:min-w-0 md:shrink-0 md:grow-0 md:px-6 md:transition-[flex-basis] md:ease-[cubic-bezier(0.16,1,0.3,1)] ${BASIS_CLASS_BY_STATE[state]} ${DURATION_CLASS_BY_KIND[duration]}`}
+      className={`group/card border-border relative min-w-0 shrink-0 grow-0 overflow-hidden border-l transition-[flex-basis] duration-1100 first:border-l-0 motion-reduce:transition-none ${easeCarousel} ${BASIS_CLASS_BY_STATE[state]}`}
     >
-      <p className='text-signal font-mono text-xs tracking-widest uppercase'>
-        {work.tag}
-      </p>
-      <h3 className='font-display overflow-hidden text-3xl tracking-tight md:w-[calc(100cqw/var(--cols)-3rem)] md:text-5xl'>
-        <ExternalLink
-          href={work.href}
-          className='group-data-[state=collapsed]/card:text-fg-subtle transition-colors duration-300 hover:no-underline!'
-        >
-          {work.title}
-        </ExternalLink>
-      </h3>
-
       <AnimatePresence>
-        {isExpanded && (
-          <motion.p
-            initial={reveal.initial}
-            animate={reveal.animate}
-            exit={reveal.exit}
-            className='text-fg-muted text-sm leading-relaxed'
-          >
-            {work.description}
-          </motion.p>
+        {onAutoAdvance && (
+          <WorkProgress
+            key='progress'
+            paused={timerPaused}
+            onComplete={onAutoAdvance}
+          />
         )}
       </AnimatePresence>
 
-      {work.media && (
-        <AnimatePresence>
-          {isExpanded && (
-            <motion.div
-              initial={{ ...reveal.initial, maxHeight: 0 }}
-              animate={{ ...reveal.animate, maxHeight: 260 }}
-              exit={{ ...reveal.exit, maxHeight: 0 }}
-              className='overflow-hidden'
+      {/* The mask lives on this wrapper, not the li, so the progress bar above escapes the edge fade */}
+      <div className='h-full mask-r-from-[calc(100%-1.5rem)] p-6'>
+        {/* Content is laid out once at expanded width; the column is a window sliding over it */}
+        <div className='flex h-full w-[calc(100cqw-min(var(--cols)-1,1)*30cqw-3rem)] flex-col'>
+          <p className='text-signal mb-4 font-mono text-xs tracking-widest uppercase'>
+            {work.tag}
+          </p>
+          <h3 className='font-display mb-8 text-5xl tracking-tight'>
+            <UnstyledExternalLink
+              href={work.href}
+              className='group-data-[state=collapsed]/card:text-fg-subtle text-gray-100 transition-colors duration-300 hover:text-white active:text-blue-300'
             >
-              <WorkMediaSlot media={work.media} />
-            </motion.div>
-          )}
-        </AnimatePresence>
-      )}
+              {work.title}
+            </UnstyledExternalLink>
+          </h3>
 
-      <p className='text-fg-muted mt-auto font-mono text-xs tracking-widest uppercase'>
-        {work.meta}
-      </p>
+          <div
+            inert={!isExpanded}
+            className={`flex flex-col gap-6 transition-[opacity,translate] duration-1100 group-data-[state=collapsed]/card:translate-y-2 group-data-[state=collapsed]/card:opacity-0 motion-reduce:transition-none ${easeCarousel}`}
+          >
+            <p className='text-fg-muted text-sm leading-relaxed'>
+              {work.description}
+            </p>
+            {work.media && <MediaImage {...work.media} />}
+          </div>
+
+          <div className="text-fg-muted mt-auto flex gap-2 font-mono text-xs tracking-widest uppercase [&>span+span]:before:mr-2 [&>span+span]:before:content-['·']">
+            {work.metaTags.map((tag) => (
+              <span key={tag}>{tag}</span>
+            ))}
+          </div>
+        </div>
+      </div>
     </motion.li>
   )
 }
