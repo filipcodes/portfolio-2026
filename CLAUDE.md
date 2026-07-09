@@ -9,6 +9,6 @@ This repo compiles with React Compiler (`babel-plugin-react-compiler`). Do not a
 ## Animation policy
 
 - **CSS transitions** own state-driven property tweens: widths, fades, color shifts, anything toggled by a `data-*` attribute (e.g. `data-state` group selectors). They are cheap and interruptible by default.
-- **Motion** owns discrete choreography: enter/exit (`AnimatePresence`), staggered reveals, and clocks that need playback control (`animate()` controls with `pause`/`play`/`speed`).
+- **Motion** owns discrete choreography: enter/exit (`AnimatePresence`) and staggered reveals.
 - Per-frame visuals bind MotionValues via `style`; never drive them with React state.
 - Do not use Motion `layout`/`layoutId` on the work columns: layout animations scale-distort 1px borders and text, and the CSS `flex-basis` transition sidesteps it.
