@@ -10,13 +10,19 @@ interface HeroCtaLinkProps {
   href: string
   children: ReactNode
   emphasized?: boolean
+  target?: React.HTMLAttributeAnchorTarget
 }
 
-function HeroCtaLink({ href, children, emphasized = false }: HeroCtaLinkProps) {
+function HeroCtaLink({
+  href,
+  children,
+  emphasized = false,
+  target = '_blank',
+}: HeroCtaLinkProps) {
   return (
     <a
       href={href}
-      target='_blank'
+      target={target}
       rel='noopener noreferrer'
       className={`group inline-flex items-center gap-1 transition-colors ${
         emphasized ? 'text-signal hover:text-fg' : 'text-fg-muted hover:text-fg'
@@ -67,14 +73,13 @@ function HeroMainContent() {
         variants={fadeUp}
         className='text-fg-muted mb-10 max-w-2xl text-lg leading-relaxed md:text-xl'
       >
-        Senior full-stack engineer building fast, reliable products that stay
-        maintainable at scale.
+        Professional computer convincer. Occasional complexity remover.
       </motion.h2>
       <motion.p
         variants={fadeUp}
         className='text-fg-muted mb-12 font-mono text-xs tracking-widest uppercase'
       >
-        TypeScript · React · Node.js · AWS
+        Currently: TypeScript · React · Node.js · AWS
       </motion.p>
 
       <motion.div
@@ -85,7 +90,9 @@ function HeroMainContent() {
         <HeroCtaLink href={links.linkedin} emphasized>
           LinkedIn
         </HeroCtaLink>
-        <HeroCtaLink href={links.cv}>CV</HeroCtaLink>
+        <HeroCtaLink target='_self' href={links.cv}>
+          CV
+        </HeroCtaLink>
       </motion.div>
     </motion.div>
   )
@@ -101,7 +108,6 @@ export function HeroSection() {
         transition={{ delay: 0.4, duration: 0.6 }}
       >
         <p className='text-fg-subtle hidden md:block'>Europe · CET</p>
-        <p className='text-fg-subtle hidden md:block'>48.15°N · 17.11°E</p>
         <p className='flex items-center justify-end gap-2'>
           <span className='bg-signal size-1.5 animate-pulse rounded-full' />
           Open to interesting problems
