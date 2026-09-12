@@ -2,7 +2,8 @@
   "redirects": [
     {
       "source": "/cv",
-      "destination": "https://docs.google.com/document/d/17kqXJ94veuIuesiAqK4E1BYld4Kn6rOyMWC1Vhp2zkw/export?format=pdf"
+      "destination": "https://docs.google.com/document/d/17kqXJ94veuIuesiAqK4E1BYld4Kn6rOyMWC1Vhp2zkw/export?format=pdf",
+      "permanent": false
     }
   ],
   "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }],
