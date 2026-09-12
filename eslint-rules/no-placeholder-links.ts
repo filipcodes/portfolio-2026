@@ -7,12 +7,12 @@ const noPlaceholderLinks: Rule.RuleModule = {
     type: 'problem',
     docs: {
       description:
-        "Disallow scheme-only placeholder URLs ('http://' or 'https://') — they ship as dead links.",
+        "Disallow scheme-only placeholder URLs ('http://' or 'https://') - they ship as dead links.",
     },
     schema: [],
     messages: {
       deadLink:
-        "'{{value}}' is a placeholder that ships as a dead link — replace it with a real URL.",
+        "'{{value}}' is a placeholder that ships as a dead link - replace it with a real URL.",
     },
   },
   create(context) {
