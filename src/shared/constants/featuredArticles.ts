@@ -1,4 +1,4 @@
-export interface ArticleParagraph {
+interface ArticleParagraph {
   index: number
   text: string
 }

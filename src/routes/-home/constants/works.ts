@@ -1,7 +1,7 @@
 import streamPlanScreenshot from '@/assets/work/stream-plan.webp'
 import zircuitBridgeScreenshot from '@/assets/work/zircuit-bridge.webp'
 
-export interface WorkMedia {
+interface WorkMedia {
   src: string
   alt: string
   label: string

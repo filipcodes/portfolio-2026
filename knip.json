@@ -1,0 +1,7 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "ignore": ["src/routes/-home/components/WritingSection.tsx"],
+  "include": ["nsExports", "nsTypes", "enumMembers", "namespaceMembers"],
+  "includeEntryExports": true,
+  "treatConfigHintsAsErrors": true
+}

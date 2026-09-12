@@ -1,6 +1,6 @@
 import { stagger, type Variants } from 'motion/react'
 
-export const easeOutExpo: [number, number, number, number] = [0.16, 1, 0.3, 1]
+const easeOutExpo: [number, number, number, number] = [0.16, 1, 0.3, 1]
 
 export const fadeUp: Variants = {
   hidden: { opacity: 0, y: 12 },

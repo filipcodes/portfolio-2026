@@ -8,6 +8,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
+    "knip": "knip",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -43,6 +44,7 @@
     "eslint-plugin-tailwindcss": "4.0.6",
     "globals": "^17.6.0",
     "jiti": "^2.7.0",
+    "knip": "^6.35.1",
     "prettier": "^3.8.4",
     "prettier-plugin-tailwindcss": "^0.8.0",
     "typescript": "~6.0.2",
