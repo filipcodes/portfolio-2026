@@ -48,7 +48,7 @@ export function Footer() {
           </div>
 
           <div>
-            <SectionHeading label='Connect' />
+            <SectionHeading label='Reach me' />
             <ul className='space-y-2'>
               <li>
                 <ExternalLink href={`mailto:${links.email}`}>
@@ -67,8 +67,8 @@ export function Footer() {
           <div>
             <SectionHeading label='Colophon' />
             <p className='text-fg-muted text-sm leading-relaxed'>
-              Set in Space Grotesk and Space Mono. Built with React, TanStack
-              Router, and Tailwind CSS.
+              Built with React, TanStack Router, and Tailwind. Typefaces used:
+              Space Grotesk, Space Mono.
             </p>
             <ul className='mt-2 space-y-2'>
               <li>
@@ -89,7 +89,7 @@ export function Footer() {
       >
         <img
           src='/logo/fs.png'
-          alt=''
+          alt='Filip Sipos Logo'
           className='aspect-square w-[min(10vw,7.9rem)] shrink-0 md:translate-y-[30.5%]'
         />
         <span className='block font-mono text-[min(12vw,9.5rem)] leading-none font-bold tracking-tighter whitespace-nowrap select-none md:translate-y-[25%]'>
