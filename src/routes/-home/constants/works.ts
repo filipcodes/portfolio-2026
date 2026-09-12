@@ -1,5 +1,5 @@
 import streamPlanScreenshot from '@/assets/work/stream-plan.webp'
-import zircuitScreenshot from '@/assets/work/zircuit.webp'
+import zircuitBridgeScreenshot from '@/assets/work/zircuit-bridge.webp'
 
 export interface WorkMedia {
   src: string
@@ -21,15 +21,15 @@ export const works: readonly Work[] = [
   {
     tag: 'Public Client Work',
     title: 'Zircuit',
-    href: 'https://explorer.zircuit.com/',
+    href: 'https://bridge.zircuit.com/',
     description:
       'I co-architected the Zircuit Explorer and Bridge - the primary interfaces to an Ethereum L2 focused on AI-driven security - and led the dev team for part of the engagement.',
     metaTags: ['2025', 'React', 'Web3'],
     media: {
-      src: zircuitScreenshot,
-      alt: 'The Zircuit block explorer showing recent blocks and transactions',
-      label: 'explorer.zircuit.com',
-      href: 'https://explorer.zircuit.com/',
+      src: zircuitBridgeScreenshot,
+      alt: 'The Zircuit bridge interface with an Ethereum to Zircuit Mainnet transfer ready to go',
+      label: 'bridge.zircuit.com',
+      href: 'https://bridge.zircuit.com/',
     },
   },
   {
