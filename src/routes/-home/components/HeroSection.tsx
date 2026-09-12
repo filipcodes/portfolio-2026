@@ -24,33 +24,15 @@ function HeroCtaLink({
       href={href}
       target={target}
       rel='noopener noreferrer'
-      className={`group inline-flex items-center gap-1 transition-colors ${
-        emphasized ? 'text-signal hover:text-fg' : 'text-fg-muted hover:text-fg'
+      className={`hover:text-fg inline-flex items-center gap-1 transition-colors ${
+        emphasized ? 'text-signal' : 'text-fg-muted'
       }`}
     >
-      <span
-        aria-hidden='true'
-        className={
-          emphasized
-            ? 'text-signal-dim group-hover:text-signal'
-            : 'text-fg-subtle group-hover:text-fg-muted'
-        }
-      >
-        [
-      </span>
+      <span aria-hidden='true'>[</span>
 
       {children}
 
-      <span
-        aria-hidden='true'
-        className={
-          emphasized
-            ? 'text-signal-dim group-hover:text-signal'
-            : 'text-fg-subtle group-hover:text-fg-muted'
-        }
-      >
-        ]
-      </span>
+      <span aria-hidden='true'>]</span>
     </a>
   )
 }
