@@ -10,7 +10,7 @@ export const Route = createFileRoute('/')({
 
 function HomePage() {
   return (
-    <div className='space-y-48'>
+    <div className='space-y-48 pb-48'>
       <HeroSection />
       {/* <WritingSection /> */}
       <WorkSection />
