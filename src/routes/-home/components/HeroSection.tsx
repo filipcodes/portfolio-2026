@@ -55,7 +55,7 @@ function HeroMainContent() {
         variants={fadeUp}
         className='text-fg-muted mb-10 max-w-2xl text-lg leading-relaxed md:text-xl'
       >
-        Professional computer convincer. Occasional complexity remover.
+        Professional computer convincer. Occasional computer fixer.
       </motion.h2>
       <motion.p
         variants={fadeUp}
